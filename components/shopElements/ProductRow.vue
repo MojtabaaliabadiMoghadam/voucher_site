@@ -1,9 +1,3 @@
-<script setup>
-const props = defineProps({
-  products: { type: Array, default: null },
-});
-</script>
-
 <template>
   <div v-if="products" class="grid gap-8">
     <ProductCard
@@ -18,3 +12,10 @@ const props = defineProps({
       }" />
   </div>
 </template>
+<script setup>
+import ProductCard from "~/components/productElements/ProductCard.vue";
+
+const props = defineProps({
+  products: { type: Array, default: null },
+});
+</script>

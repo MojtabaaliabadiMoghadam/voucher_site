@@ -1,10 +1,6 @@
-<script setup>
-const { toggleCart, cart } = useCart();
-</script>
-
 <template>
   <div class="relative cursor-pointer inline-flex" title="Cart" @click="toggleCart">
-    <Icon name="ion:cart-outline" size="22" class="mr-1 md:mr-0" />
+    <span class="mr-1 mdi mdi-cart-outline mdi-24px md:mr-0" />
     <ClientOnly>
       <Transition name="popIn" mode="out-in">
         <span
@@ -16,7 +12,9 @@ const { toggleCart, cart } = useCart();
     </ClientOnly>
   </div>
 </template>
-
+<script setup>
+const { toggleCart, cart } = useCart();
+</script>
 <style lang="postcss">
 /* popIn */
 .popIn-enter-active,

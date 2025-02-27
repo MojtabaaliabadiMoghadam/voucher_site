@@ -1,7 +1,3 @@
-<script setup lang="ts">
-const { toggleCart } = useCart();
-</script>
-
 <template>
   <div class="flex flex-col items-center justify-center flex-1 mb-20 text-gray-400">
     <Icon name="ion:cart-outline" size="96" class="opacity-75 mb-5" />
@@ -15,3 +11,6 @@ const { toggleCart } = useCart();
     </NuxtLink>
   </div>
 </template>
+<script setup lang="ts">
+const { toggleCart } = useCart();
+</script>

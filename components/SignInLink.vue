@@ -1,8 +1,3 @@
-<script setup lang="ts">
-const { viewer, avatar, logoutUser, isPending, wishlistLink } = useAuth();
-const linkTitle = computed<string>(() => viewer.value?.username || 'Sign In');
-</script>
-
 <template>
   <NuxtLink to="/my-account" :title="linkTitle" class="hidden sm:inline-flex aspect-square items-center">
     <Transition name="pop-in" mode="out-in">
@@ -23,11 +18,14 @@ const linkTitle = computed<string>(() => viewer.value?.username || 'Sign In');
           </button>
         </div>
       </span>
-      <Icon v-else name="ion:person-outline" size="22" class="border border-transparent" />
+      <span v-else class="border mdi mdi-account-outline mdi-24px border-transparent" />
     </Transition>
   </NuxtLink>
 </template>
-
+<script setup lang="ts">
+const { viewer, avatar, logoutUser, isPending, wishlistLink } = useAuth();
+const linkTitle = computed<string>(() => viewer.value?.username || 'Sign In');
+</script>
 <style scoped lang="postcss">
 .pop-in-enter-active,
 .pop-in-leave-active {

@@ -1,10 +1,10 @@
 <template>
   <NuxtLoadingIndicator />
-  <div class="flex flex-col min-h-screen">
+  <div class="flex flex-col min-h-screen" :dir="locale === 'fa-FA' ? 'rtl' : 'ltr'">
     <AppHeader />
 
-    <Transition name="slide-from-right">
-      <LazyCart v-if="isShowingCart" />
+    <Transition name="slide-from-left">
+      <LazyShopElementsCart v-if="isShowingCart" />
     </Transition>
 
     <Transition name="slide-from-left">
@@ -29,6 +29,9 @@ const route = useRoute();
 const { isShowingCart, toggleCart } = useCart();
 const { isShowingMobileMenu, toggleMobileMenu, addBodyClass, removeBodyClass } = useHelpers();
 const { siteName } = useAppConfig();
+import { useI18n } from 'vue-i18n';
+
+const { locale, t } = useI18n();
 
 const closeCartAndMenu = () => {
   toggleCart(false);

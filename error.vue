@@ -1,35 +1,9 @@
-<script setup lang="ts">
-const route = useRoute();
-const { error } = defineProps<{ error: any }>();
-const { isShowingCart, toggleCart } = useCart();
-const { isShowingMobileMenu, toggleMobileMenu, addBodyClass, removeBodyClass } = useHelpers();
-
-const closeCartAndMenu = () => {
-  toggleCart(false);
-  toggleMobileMenu(false);
-};
-
-watch([isShowingCart, isShowingMobileMenu], () => {
-  isShowingCart.value || isShowingMobileMenu.value ? addBodyClass('overflow-hidden') : removeBodyClass('overflow-hidden');
-});
-
-watch(
-  () => route.path,
-  () => closeCartAndMenu(),
-);
-
-useSeoMeta({
-  title: error?.statusCode ? `Error ${error.statusCode}` : 'Error',
-  description: error?.message || '',
-});
-</script>
-
 <template>
   <div class="flex flex-col min-h-screen">
     <AppHeader />
 
     <Transition name="slide-from-right">
-      <LazyCart v-if="isShowingCart" />
+      <LazyShopElementsCart v-if="isShowingCart" />
     </Transition>
 
     <Transition name="slide-from-left">
@@ -48,3 +22,31 @@ useSeoMeta({
     <AppFooter />
   </div>
 </template>
+<script setup lang="ts">
+import MobileMenu from "~/components/generalElements/MobileMenu.vue";
+import AppHeader from "~/components/generalElements/AppHeader.vue";
+
+const route = useRoute();
+const { error } = defineProps<{ error: any }>();
+const { isShowingCart, toggleCart } = useCart();
+const { isShowingMobileMenu, toggleMobileMenu, addBodyClass, removeBodyClass } = useHelpers();
+
+const closeCartAndMenu = () => {
+  toggleCart(false);
+  toggleMobileMenu(false);
+};
+
+watch([isShowingCart, isShowingMobileMenu], () => {
+  isShowingCart.value || isShowingMobileMenu.value ? addBodyClass('overflow-hidden') : removeBodyClass('overflow-hidden');
+});
+
+watch(
+    () => route.path,
+    () => closeCartAndMenu(),
+);
+
+useSeoMeta({
+  title: error?.statusCode ? `Error ${error.statusCode}` : 'Error',
+  description: error?.message || '',
+});
+</script>

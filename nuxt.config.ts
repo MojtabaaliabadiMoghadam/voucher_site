@@ -1,15 +1,23 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import Aura from '@primevue/themes/aura';
 export default defineNuxtConfig({
+  components: true,
   ssr: true,
   devtools: { enabled: true },
-
+  image: {
+    dir: 'assets/'
+  },
   css: [
     '~/assets/css/main.css',
     '@mdi/font/css/materialdesignicons.min.css',
   ],
 
-  modules: ['@pinia/nuxt', '@primevue/nuxt-module', '@nuxtjs/i18n'],
+  modules: [
+    '@pinia/nuxt',
+    '@primevue/nuxt-module',
+    '@nuxtjs/i18n',
+    '@nuxt/image'
+  ],
   primevue: {
     locale: {
       rtl: true // فعال‌سازی حالت راست‌به‌چپ
@@ -68,6 +76,7 @@ export default defineNuxtConfig({
   },
   i18n: {
     locales: [
+      { code: 'fa-FA', file: 'fa-FA.json', name: 'Persian 🇺🇸' },
       { code: 'en_US', file: 'en-US.json', name: 'English 🇺🇸' },
       { code: 'de_DE', file: 'de-DE.json', name: 'Deutsch 🇩🇪' },
       { code: 'es_ES', file: 'es-ES.json', name: 'Español 🇪🇸' },
@@ -76,7 +85,7 @@ export default defineNuxtConfig({
       { code: 'pt_BR', file: 'pt-BR.json', name: 'Português 🇧🇷' },
     ],
     langDir: 'locales',
-    defaultLocale: 'en_US',
+    defaultLocale: 'fa-FA',
     strategy: 'no_prefix',
   },
   compatibilityDate: '2024-09-27'
