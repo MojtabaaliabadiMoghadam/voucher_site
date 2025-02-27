@@ -7,8 +7,8 @@
       <LazyShopElementsCart v-if="isShowingCart" />
     </Transition>
 
-    <Transition name="slide-from-left">
-      <MobileMenu v-if="isShowingMobileMenu" />
+    <Transition name="slide-from-right">
+      <LazyGeneralElementsMobileMenu v-if="isShowingMobileMenu" />
     </Transition>
 
     <NuxtPage />

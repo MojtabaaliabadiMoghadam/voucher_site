@@ -1,7 +1,7 @@
 <template>
   <header class="sticky top-0 z-40 bg-white shadow-sm shadow-light-500">
     <div class="container flex items-center justify-between py-4">
-      <div class="flex items-center">
+      <div class="flex items-center gap-3">
         <MenuTrigger class="lg:hidden" />
         <Logo class="md:w-[160px]" />
       </div>
@@ -11,6 +11,7 @@
         <div class="flex gap-4 items-center">
           <SignInLink />
           <CartTrigger />
+          <span class="mr-1 mdi mdi-magnify mdi-24px md:mr-0" @click="toggleSearch"/>
         </div>
       </div>
     </div>
@@ -29,5 +30,5 @@ import ProductSearch from "~/components/shopElements/ProductSearch.vue";
 import SearchTrigger from "~/components/generalElements/SearchTrigger.vue";
 import CartTrigger from "~/components/cartElements/CartTrigger.vue";
 
-const { isShowingSearch } = useSearching();
+const { isShowingSearch,toggleSearch} = useSearching();
 </script>

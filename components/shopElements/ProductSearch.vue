@@ -12,7 +12,7 @@
       class="absolute z-10 flex items-center gap-1 px-2 py-1 text-xs rounded cursor-pointer bg-primary bg-opacity-10 hover:bg-opacity-20 text-primary left-2"
       @click="reset">
       <span>{{ $t('messages.general.clear') }}</span>
-      <Icon name="ion:close-outline" size="18" />
+      <span class="mdi mdi-close" />
     </span>
   </form>
 </template>

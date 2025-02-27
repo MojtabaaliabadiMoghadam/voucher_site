@@ -23,6 +23,8 @@
   </NuxtLink>
 </template>
 <script setup lang="ts">
+import LoadingIcon from "~/components/generalElements/LoadingIcon.vue";
+
 const { viewer, avatar, logoutUser, isPending, wishlistLink } = useAuth();
 const linkTitle = computed<string>(() => viewer.value?.username || 'Sign In');
 </script>
