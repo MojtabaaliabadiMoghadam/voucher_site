@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import Logo from "~/components/generalElements/Logo.vue";
+import WebsiteShortDescription from "~/components/shopElements/WebsiteShortDescription.vue";
+
 const { wishlistLink } = useAuth();
 </script>
 
@@ -8,7 +11,7 @@ const { wishlistLink } = useAuth();
       <div class="mr-auto">
         <Logo />
         <WebsiteShortDescription />
-        <LangSwitcher class="mt-8" />
+<!--        <LangSwitcher class="mt-8" />-->
       </div>
       <div class="w-3/7 lg:w-auto">
         <div class="mb-1 font-semibold">Information</div>
@@ -51,7 +54,7 @@ const { wishlistLink } = useAuth();
       <div class="copywrite">
         <p class="py-4 text-xs text-center">
           - by
-          <a href="https://scottyzen.com" title="Scott Kennedy - Web Developer" target="_blank">Scott Kennedy</a>
+          <a href="https://scottyzen.com" title="Scott Kennedy - Web Developer" target="_blank">example name</a>
         </p>
       </div>
       <SocialIcons class="ml-auto" />

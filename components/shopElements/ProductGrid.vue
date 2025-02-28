@@ -1,23 +1,27 @@
-<script setup lang="ts">
-const route = useRoute();
-const { productsPerPage } = useHelpers();
-const { products } = useProducts();
-const page = ref(parseInt(route.params.pageNumber as string) || 1);
-const productsToShow = computed(() => products.value.slice((page.value - 1) * productsPerPage, page.value * productsPerPage));
-</script>
-
 <template>
   <Transition name="fade" mode="out-in">
-    <section v-if="!!products.length" class="relative w-full">
+    <section v-if="!!dataStore.products?.length" class="relative w-full">
       <TransitionGroup name="shrink" tag="div" mode="in-out" class="product-grid">
-        <ProductCard v-for="(node, i) in productsToShow" :key="node.id || i" :node :index="i" />
+        <ProductCard v-for="(node, i) in dataStore.products" :key="node.id || i" :node :index="i" />
       </TransitionGroup>
       <Pagination />
     </section>
     <NoProductsFound v-else />
   </Transition>
 </template>
+<script setup lang="ts">
+import ProductCard from "~/components/productElements/ProductCard.vue";
+import Pagination from "~/components/shopElements/Pagination.vue";
+import NoProductsFound from "~/components/shopElements/NoProductsFound.vue";
+import {useDataGlobal} from "~/stores/globalStore";
+const dataStore = useDataGlobal()
 
+const route = useRoute();
+const { productsPerPage } = useHelpers();
+// const { products } = useProducts();
+const page = ref(parseInt(route.params.pageNumber as string) || 1);
+// const productsToShow = computed(() => products.value.slice((page.value - 1) * productsPerPage, page.value * productsPerPage));
+</script>
 <style lang="postcss" scoped>
 .product-grid {
   @apply my-4 min-h-[600px] grid transition-all gap-8 lg:my-8;

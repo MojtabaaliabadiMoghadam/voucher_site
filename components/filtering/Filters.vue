@@ -1,5 +1,28 @@
+<template>
+  <aside id="filters">
+    <OrderByDropdown class="block w-full md:hidden" />
+    <div class="relative z-30 grid mb-12 space-y-8 divide-y">
+      <PriceFilter />
+      <CategoryFilter v-if="!hideCategories" :terms="productCategoryTerms" />
+      <div v-for="attribute in attributesWithTerms" :key="attribute.slug">
+        <ColorFilter v-if="attribute.slug == 'pa_color' || attribute.slug == 'pa_colour'" :attribute />
+        <GlobalFilter v-else :attribute />
+      </div>
+      <OnSaleFilter />
+      <LazyStarRatingFilter v-if="storeSettings.showReviews" />
+      <LazyResetFiltersButton v-if="isFiltersActive" />
+    </div>
+  </aside>
+  <div class="fixed inset-0 z-50 hidden bg-black opacity-25 filter-overlay" @click="removeBodyClass('show-filters')"></div>
+</template>
 <script setup lang="ts">
 import { TaxonomyEnum } from '#woo';
+import OrderByDropdown from "~/components/shopElements/OrderByDropdown.vue";
+import PriceFilter from "~/components/filtering/PriceFilter.vue";
+import CategoryFilter from "~/components/filtering/CategoryFilter.vue";
+import ColorFilter from "~/components/filtering/ColorFilter.vue";
+import GlobalFilter from "~/components/filtering/GlobalFilter.vue";
+import OnSaleFilter from "~/components/filtering/OnSaleFilter.vue";
 
 const { isFiltersActive } = useFiltering();
 const { removeBodyClass } = useHelpers();
@@ -20,24 +43,6 @@ const productCategoryTerms = terms.filter((term) => term.taxonomyName === 'produ
 // Filter out the color attribute and the rest of the global product attributes
 const attributesWithTerms = globalProductAttributes.map((attr) => ({ ...attr, terms: terms.filter((term) => term.taxonomyName === attr.slug) }));
 </script>
-
-<template>
-  <aside id="filters">
-    <OrderByDropdown class="block w-full md:hidden" />
-    <div class="relative z-30 grid mb-12 space-y-8 divide-y">
-      <PriceFilter />
-      <CategoryFilter v-if="!hideCategories" :terms="productCategoryTerms" />
-      <div v-for="attribute in attributesWithTerms" :key="attribute.slug">
-        <ColorFilter v-if="attribute.slug == 'pa_color' || attribute.slug == 'pa_colour'" :attribute />
-        <GlobalFilter v-else :attribute />
-      </div>
-      <OnSaleFilter />
-      <LazyStarRatingFilter v-if="storeSettings.showReviews" />
-      <LazyResetFiltersButton v-if="isFiltersActive" />
-    </div>
-  </aside>
-  <div class="fixed inset-0 z-50 hidden bg-black opacity-25 filter-overlay" @click="removeBodyClass('show-filters')"></div>
-</template>
 
 <style lang="postcss">
 .show-filters .filter-overlay {
