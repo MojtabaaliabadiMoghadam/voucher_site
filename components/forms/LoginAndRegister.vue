@@ -1,27 +1,29 @@
 <template>
   <div class="max-w-lg mx-auto my-16 min-h-[600px] text-center">
-    <Logo />
+    <Logo/>
     <div class="flex flex-col my-2">
       <h1 class="text-xl font-semibold lg:text-3xl">{{ formTitle }}</h1>
-      <p class="text-gray-500 mt-2">Welcome back! Select method to login.</p>
+      <p class="text-gray-500 mt-2">خوش آمدید روش ورود خود را انتخاب کنید</p>
     </div>
 
-    <LoginProviders class="my-8" v-if="formView === 'login' || formView === 'register'" />
+    <LoginProviders class="my-8" v-if="formView === 'login' || formView === 'register'"/>
 
     <form class="mt-6" @submit.prevent="handleFormSubmit(userInfo)">
       <div v-if="formView === 'register' || formView === 'forgotPassword'" for="email">
-        <input id="email" v-model="userInfo.email" :placeholder="inputPlaceholder.email" autocomplete="email" type="text" required />
+        <input id="email" v-model="userInfo.email" :placeholder="inputPlaceholder.email" autocomplete="email"
+               type="text" required/>
       </div>
-      <p v-if="formView === 'forgotPassword'" class="text-sm text-gray-500">{{ $t('messages.account.enterEmailOrUsernameForReset') }}</p>
+      <p v-if="formView === 'forgotPassword'" class="text-sm text-gray-500">
+        {{ $t('messages.account.enterEmailOrUsernameForReset') }}</p>
       <div v-if="formView !== 'forgotPassword'">
-        <input class="mt-1" v-model="userInfo.username" :placeholder="inputPlaceholder.username" autocomplete="username" type="text" required />
-
+        <input class="mt-1" v-model="userInfo.username" :placeholder="inputPlaceholder.username" autocomplete="username"
+               type="text" required/>
         <PasswordInput
-          className="border rounded-lg w-full p-3 px-4 bg-white mt-1"
-          v-model="userInfo.password"
-          :placeholder="passwordLabel"
-          :autocomplete="formView === 'login' ? 'current-password' : 'new-password'"
-          :required="true" />
+            className="border rounded-lg w-full p-3 px-4 bg-white mt-1"
+            v-model="userInfo.password"
+            :placeholder="passwordLabel"
+            :autocomplete="formView === 'login' ? 'current-password' : 'new-password'"
+            :required="true"/>
       </div>
       <Transition name="scale-y" mode="out-in">
         <div v-if="message" class="my-4 text-sm text-green-500" v-html="message"></div>
@@ -31,22 +33,25 @@
       </Transition>
 
       <div class="flex items-center justify-between mt-4">
-        <label class="flex items-center gap-2"><input v-model="userInfo.rememberMe" type="checkbox" />Remember me </label>
-        <div class="font-semibold cursor-pointer text-sm text-primary hover:text-primary" @click="navigate('forgotPassword')" v-if="formView === 'login'">
-          Forgot password?
+        <label class="flex items-center gap-2"><input v-model="userInfo.rememberMe" type="checkbox"/>مرا به خاطر بسپار
+        </label>
+        <div class="font-semibold cursor-pointer text-sm text-primary hover:text-primary"
+             @click="navigate('forgotPassword')" v-if="formView === 'login'">
+          فراموشی رمز عبور ؟
         </div>
       </div>
 
       <!-- Login button -->
       <button class="flex items-center justify-center gap-4 my-6 text-lg">
-        <LoadingIcon v-if="isPending" stroke="4" size="16" color="#fff" />
+        <LoadingIcon v-if="isPending" stroke="4" size="16" color="#fff"/>
         <span>{{ buttonText }}</span>
       </button>
     </form>
 
     <div v-if="formView === 'login'" class="my-6 text-center">
       {{ $t('messages.account.noAccount') }}
-      <a class="font-semibold cursor-pointer text-primary" @click="navigate('register')"> {{ $t('messages.account.accountRegister') }} </a>.
+      <a class="font-semibold cursor-pointer text-primary" @click="navigate('register')">
+        {{ $t('messages.account.accountRegister') }} </a>.
     </div>
 
     <div v-if="formView === 'register'" class="my-2 text-center justify-center">
@@ -56,17 +61,24 @@
       </a>
     </div>
 
-    <div class="my-8 text-center cursor-pointer" @click="navigate('login')" v-if="formView === 'forgotPassword'">{{ $t('messages.account.backToLogin') }}</div>
+    <div class="my-8 text-center cursor-pointer" @click="navigate('login')" v-if="formView === 'forgotPassword'">
+      {{ $t('messages.account.backToLogin') }}
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-const { t } = useI18n();
+import Logo from "~/components/generalElements/Logo.vue";
+import LoginProviders from "~/components/forms/LoginProviders.vue";
+import PasswordInput from "~/components/forms/PasswordInput.vue";
+import LoadingIcon from "~/components/generalElements/LoadingIcon.vue";
+
+const {t} = useI18n();
 const route = useRoute();
 const router = useRouter();
-const { loginUser, isPending, registerUser, sendResetPasswordEmail, loginClients } = useAuth();
+const {loginUser, isPending, registerUser, sendResetPasswordEmail, loginClients} = useAuth();
 
-const userInfo = ref({ email: '', password: '', username: '', rememberMe: false });
+const userInfo = ref({email: '', password: '', username: '', rememberMe: false});
 const formView = ref('login');
 const message = ref('');
 const errorMessage = ref('');
@@ -80,10 +92,10 @@ const updateFormView = () => {
     formView.value = 'login';
   }
 };
-watch(route, updateFormView, { immediate: true });
+watch(route, updateFormView, {immediate: true});
 
 const login = async (userInfo: UserInfo) => {
-  const { success, error } = await loginUser(userInfo);
+  const {success, error} = await loginUser(userInfo);
   switch (error) {
     case 'invalid_username':
       errorMessage.value = t('messages.error.invalidUsername');
@@ -104,7 +116,7 @@ const login = async (userInfo: UserInfo) => {
 
 const handleFormSubmit = async (userInfo: UserInfo) => {
   if (formView.value === 'register') {
-    const { success, error } = await registerUser(userInfo);
+    const {success, error} = await registerUser(userInfo);
     if (success) {
       errorMessage.value = '';
       message.value = t('messages.account.accountCreated') + ' ' + t('messages.account.loggingIn');
@@ -122,7 +134,7 @@ const handleFormSubmit = async (userInfo: UserInfo) => {
 };
 
 const resetPassword = async (userInfo: UserInfo) => {
-  const { success, error } = await sendResetPasswordEmail({ username: userInfo.email });
+  const {success, error} = await sendResetPasswordEmail({username: userInfo.email});
   if (success) {
     errorMessage.value = '';
     message.value = t('messages.account.ifRegistered');
@@ -134,11 +146,11 @@ const resetPassword = async (userInfo: UserInfo) => {
 const navigate = (view: string) => {
   formView.value = view;
   if (view === 'forgotPassword') {
-    router.push({ query: { action: 'forgotPassword' } });
+    router.push({query: {action: 'forgotPassword'}});
   } else if (view === 'register') {
-    router.push({ query: { action: 'register' } });
+    router.push({query: {action: 'register'}});
   } else {
-    router.push({ query: {} });
+    router.push({query: {}});
   }
 };
 
@@ -179,10 +191,10 @@ const inputPlaceholder = computed(() => {
 input[type='text'],
 input[type='password'],
 button {
-  @apply border rounded-lg mb-4 w-full p-3 px-4 bg-white;
+  @apply border rounded-lg mb-4 w-full bg-white;
 }
 
 form button {
-  @apply rounded-lg font-bold bg-gray-800 text-white py-3 px-8 hover:bg-gray-800;
+  @apply rounded-lg font-bold bg-gray-800 py-3 text-white hover:bg-gray-800;
 }
 </style>

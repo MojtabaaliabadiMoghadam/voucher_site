@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import LoadingIcon from "~/components/generalElements/LoadingIcon.vue";
+
 const route = useRoute();
 const router = useRouter();
 
