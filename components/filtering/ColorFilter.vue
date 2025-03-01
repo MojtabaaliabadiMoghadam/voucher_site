@@ -1,29 +1,7 @@
-<script setup lang="ts">
-const { getFilter, setFilter, isFiltersActive } = useFiltering();
-
-const { attribute } = defineProps({
-  attribute: { type: Object, required: true },
-});
-
-const selectedTerms = ref(getFilter(attribute.slug) || []);
-const filterTitle = ref(attribute.label || attribute.slug);
-const isOpen = ref(attribute.openByDefault);
-
-watch(isFiltersActive, () => {
-  // uncheck all checkboxes when filters are cleared
-  if (!isFiltersActive.value) selectedTerms.value = [];
-});
-
-// Update the URL when the checkbox is changed
-const checkboxChanged = () => {
-  setFilter(attribute.slug, selectedTerms.value);
-};
-</script>
-
 <template>
   <div class="cursor-pointer flex font-semibold mt-8 leading-none justify-between items-center" @click="isOpen = !isOpen">
     <span>{{ filterTitle }}</span>
-    <Icon name="ion:chevron-down-outline" class="transform" :class="isOpen ? 'rotate-180' : ''" />
+    <span  class="transform mdi mdi-24px mdi-chevron-down transition-all ease-in duration-150" :class="isOpen ? 'rotate-180' : ''"/>
   </div>
   <div v-show="isOpen" class="mt-3 mr-6 max-h-[240px] grid gap-1.5 swatches overflow-auto custom-scrollbar">
     <div v-for="color in attribute.terms" :key="color.slug" :style="{ '--color': color.slug }" :title="color.name">
@@ -32,7 +10,37 @@ const checkboxChanged = () => {
     </div>
   </div>
 </template>
+<script setup lang="ts">
+const { getFilter, setFilter, isFiltersActive } = useFiltering();
 
+// داده‌های هاردکد شده برای ویژگی‌ها و رنگ‌ها
+const attribute = ref({
+  slug: "pa_color",
+  label: "رنگ",
+  openByDefault: true,
+  terms: [
+    { slug: "red", name: "قرمز" },
+    { slug: "blue", name: "آبی" },
+    { slug: "green", name: "سبز" },
+    { slug: "black", name: "مشکی" },
+    { slug: "white", name: "سفید" },
+  ],
+});
+
+const selectedTerms = ref(getFilter(attribute.value.slug) || []);
+const filterTitle = ref(attribute.value.label || attribute.value.slug);
+const isOpen = ref(attribute.value.openByDefault);
+
+watch(isFiltersActive, () => {
+  // هنگام پاک شدن فیلترها، چک‌باکس‌ها را غیرفعال کن
+  if (!isFiltersActive.value) selectedTerms.value = [];
+});
+
+// به‌روزرسانی فیلتر هنگام تغییر چک‌باکس
+const checkboxChanged = () => {
+  setFilter(attribute.value.slug, selectedTerms.value);
+};
+</script>
 <style scoped lang="postcss">
 .swatches {
   grid-template-columns: repeat(auto-fit, minmax(24px, 1fr));
@@ -51,7 +59,7 @@ const checkboxChanged = () => {
   filter: saturate(1);
 }
 
-/* tick */
+/* تیک */
 .swatches input:checked + label::after {
   content: '';
   width: 25%;
@@ -64,7 +72,7 @@ const checkboxChanged = () => {
   transform: translate(-50%, -50%) rotate(45deg);
 }
 
-/* Make tick black if the color is white */
+/* تغییر رنگ تیک برای سفید و زرد */
 .swatches input:checked + label[for='white']::after,
 .swatches input:checked + label[for='yellow']::after {
   border-color: #666;

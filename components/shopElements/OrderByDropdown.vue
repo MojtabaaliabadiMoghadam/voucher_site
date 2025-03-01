@@ -1,5 +1,5 @@
 <template>
-  <div class="inline-flex ml-auto -space-x-px shadow-sm rounded-m isolate">
+  <div class="inline-flex -space-x-px shadow-sm rounded-m isolate">
     <select id="orderby-dropdown" v-model="orderby" class="bg-white rounded-l-none ring-[0.5px] ring-gray-300" aria-label="Order by">
       <option value="date">{{ $t('messages.general.latest') }}</option>
       <option value="alphabetically">{{ $t('messages.general.alphabetically') }}</option>

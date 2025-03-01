@@ -17,7 +17,7 @@ export const useDataGlobal = defineStore('data', () => {
             price: faker.commerce.price(),
             regularPrice: faker.commerce.price(),
             salePrice: faker.commerce.price(),
-            slug: faker.lorem.slug(),
+            slug: faker.commerce.id(),
             stockQuantity: faker.number.int({ min: 0, max: 100 }),
             stockStatus: faker.helpers.arrayElement(["IN_STOCK", "OUT_OF_STOCK"]),
             hasAttributes: faker.datatype.boolean(),

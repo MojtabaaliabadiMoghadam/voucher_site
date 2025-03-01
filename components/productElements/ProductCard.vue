@@ -6,12 +6,12 @@
           v-if="mainImage"
           :width="imgWidth"
           :height="imgHeight"
-          :src="mainImage"
+          :src="node.image.url"
           :alt="node.image?.altText || node.name || 'Product image'"
           :title="node.title"
           :loading="index <= 3 ? 'eager' : 'lazy'"
           :sizes="`sm:${imgWidth / 2}px md:${imgWidth}px`"
-          class="rounded-lg object-top object-cover w-full aspect-9/8"
+          class="rounded-lg object-top object-cover w-full aspect-9/8 md:h-[280px] h-[150px]"
           placeholder
           placeholder-class="blur-xl" />
     </NuxtLink>

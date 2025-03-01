@@ -1,32 +1,8 @@
-<script setup lang="ts">
-const { getFilter, setFilter, isFiltersActive } = await useFiltering();
-
-const selectedTerms = ref<string[]>(getFilter('rating'));
-const isOpen = ref(true);
-
-/**
- * @description This watches the isFiltersActive variable and unchecks all radio boxes when filters are cleared.
- * @example If the user clicks the 'clear filters' button, the isFiltersActive variable would change to false.
- */
-watch(isFiltersActive, () => {
-  if (!isFiltersActive.value) selectedTerms.value = [];
-});
-
-/**
- * @param {string} rating - This is a string instead of a number because the setFilter function is used globally and it only accepts strings.
- * @description This sets the filter to the selected rating. If the rating is already selected, it will be removed from the filter.
- */
-const radioClicked = (rating: string): void => {
-  setFilter('rating', selectedTerms.value.includes(rating) ? [] : [rating]);
-};
-</script>
-
 <template>
   <div>
     <div class="cursor-pointer flex font-semibold mt-8 leading-none justify-between items-center" @click="isOpen = !isOpen">
       <span>{{ $t('messages.shop.rating') }}</span>
-      <Icon v-show="isOpen" name="ion:chevron-up-outline" />
-      <Icon v-show="!isOpen" name="ion:chevron-down-outline" />
+      <span class="transform mdi mdi-24px mdi-chevron-down transition-all ease-in duration-150" :class="isOpen ? 'rotate-180' : ''"/>
     </div>
     <div v-if="isOpen" class="mt-3 text-sm grid text-gray-500 gap-3">
       <div class="cursor-pointer flex gap-2 items-center">
@@ -66,3 +42,29 @@ const radioClicked = (rating: string): void => {
     </div>
   </div>
 </template>
+<script setup lang="ts">
+import StarRating from "~/components/productElements/StarRating.vue";
+
+const { getFilter, setFilter, isFiltersActive } = await useFiltering();
+
+const selectedTerms = ref<string[]>(getFilter('rating'));
+const isOpen = ref(true);
+
+/**
+ * @description This watches the isFiltersActive variable and unchecks all radio boxes when filters are cleared.
+ * @example If the user clicks the 'clear filters' button, the isFiltersActive variable would change to false.
+ */
+watch(isFiltersActive, () => {
+  if (!isFiltersActive.value) selectedTerms.value = [];
+});
+
+/**
+ * @param {string} rating - This is a string instead of a number because the setFilter function is used globally and it only accepts strings.
+ * @description This sets the filter to the selected rating. If the rating is already selected, it will be removed from the filter.
+ */
+const radioClicked = (rating: string): void => {
+  setFilter('rating', selectedTerms.value.includes(rating) ? [] : [rating]);
+};
+</script>
+
+

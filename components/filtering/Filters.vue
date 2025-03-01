@@ -9,14 +9,14 @@
         <GlobalFilter v-else :attribute />
       </div>
       <OnSaleFilter />
-      <LazyStarRatingFilter v-if="storeSettings.showReviews" />
-      <LazyResetFiltersButton v-if="isFiltersActive" />
+      <LazyFilteringStarRatingFilter v-if="storeSettings.showReviews" />
+      <LazyFilteringResetFiltersButton v-if="isFiltersActive" />
     </div>
   </aside>
   <div class="fixed inset-0 z-50 hidden bg-black opacity-25 filter-overlay" @click="removeBodyClass('show-filters')"></div>
 </template>
+
 <script setup lang="ts">
-import { TaxonomyEnum } from '#woo';
 import OrderByDropdown from "~/components/shopElements/OrderByDropdown.vue";
 import PriceFilter from "~/components/filtering/PriceFilter.vue";
 import CategoryFilter from "~/components/filtering/CategoryFilter.vue";
@@ -24,24 +24,28 @@ import ColorFilter from "~/components/filtering/ColorFilter.vue";
 import GlobalFilter from "~/components/filtering/GlobalFilter.vue";
 import OnSaleFilter from "~/components/filtering/OnSaleFilter.vue";
 
-const { isFiltersActive } = useFiltering();
-const { removeBodyClass } = useHelpers();
-const runtimeConfig = useRuntimeConfig();
-const { storeSettings } = useAppConfig();
+// حذف وابستگی‌های پویا
+const isFiltersActive = ref(true);
+const storeSettings = ref({ showReviews: true });
 
-// hide-categories prop is used to hide the category filter on the product category page
+// prop برای کنترل نمایش دسته‌بندی‌ها
 const { hideCategories } = defineProps({ hideCategories: { type: Boolean, default: false } });
 
-const globalProductAttributes = (runtimeConfig?.public?.GLOBAL_PRODUCT_ATTRIBUTES as WooNuxtFilter[]) || [];
-const taxonomies = globalProductAttributes.map((attr) => attr?.slug?.toUpperCase().replace('_', '')) as TaxonomyEnum[];
-const data = ref()
-const terms = data.value?.terms?.nodes || [];
+// داده‌های هاردکد شده
+const productCategoryTerms = ref([
+  { id: 1, name: "لباس", taxonomyName: "product_cat" },
+  { id: 2, name: "کفش", taxonomyName: "product_cat" },
+]);
 
-// Filter out the product category terms and the global product attributes with their terms
-const productCategoryTerms = terms.filter((term) => term.taxonomyName === 'product_cat');
+const attributesWithTerms = ref([
+  { slug: "pa_color", terms: [{ id: 1, name: "قرمز" }, { id: 2, name: "آبی" }] },
+  { slug: "pa_size", terms: [{ id: 3, name: "کوچک" }, { id: 4, name: "بزرگ" }] },
+]);
 
-// Filter out the color attribute and the rest of the global product attributes
-const attributesWithTerms = globalProductAttributes.map((attr) => ({ ...attr, terms: terms.filter((term) => term.taxonomyName === attr.slug) }));
+// حذف کلاس برای بستن فیلترها
+const removeBodyClass = (className: string) => {
+  document.body.classList.remove(className);
+};
 </script>
 
 <style lang="postcss">
@@ -77,9 +81,9 @@ const attributesWithTerms = globalProductAttributes.map((attr) => ({ ...attr, te
     @apply bg-white h-full p-8 transform pl-2 transition-all ease-in-out bottom-0 left-4 -translate-x-[110vw] duration-300 overflow-auto fixed;
 
     box-shadow:
-      -100px 0 0 white,
-      -200px 0 0 white,
-      -300px 0 0 white;
+        -100px 0 0 white,
+        -200px 0 0 white,
+        -300px 0 0 white;
     z-index: 60;
   }
 
