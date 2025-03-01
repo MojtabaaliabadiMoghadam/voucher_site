@@ -4,9 +4,6 @@ export default defineNuxtConfig({
   components: true,
   ssr: true,
   devtools: { enabled: true },
-  image: {
-    dir: 'assets/'
-  },
   css: [
     '~/assets/css/main.css',
     '@mdi/font/css/materialdesignicons.min.css',
