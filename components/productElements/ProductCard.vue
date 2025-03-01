@@ -6,7 +6,7 @@
           v-if="mainImage"
           :width="imgWidth"
           :height="imgHeight"
-          :src="node.image.url"
+          :src="node?.image?.url"
           :alt="node.image?.altText || node.name || 'Product image'"
           :title="node.title"
           :loading="index <= 3 ? 'eager' : 'lazy'"
