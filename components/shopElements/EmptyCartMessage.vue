@@ -12,5 +12,4 @@
   </div>
 </template>
 <script setup lang="ts">
-const { toggleCart } = useCart();
 </script>

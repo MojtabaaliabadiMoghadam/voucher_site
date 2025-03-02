@@ -22,23 +22,8 @@ import NoProductsFound from "~/components/shopElements/NoProductsFound.vue";
 import {useDataGlobal} from "~/stores/globalStore";
 const dataStore = useDataGlobal()
 dataStore.generateProducts(10)
-const { setProducts, updateProductList } = useProducts();
 const route = useRoute();
 const { storeSettings } = useAppConfig();
-const { isQueryEmpty } = useHelpers();
-
-onMounted(() => {
-  // setProducts(dataStore.products);
-  // if (!isQueryEmpty.value) updateProductList();
-});
-
-watch(
-  () => route.query,
-  () => {
-    if (route.name !== 'products') return;
-    updateProductList();
-  },
-);
 
 useHead({
   title: `Products`,

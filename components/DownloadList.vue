@@ -1,6 +1,5 @@
 <script setup lang="ts">
 const { scrollToTop } = useHelpers();
-const { getDownloads, downloads } = useAuth();
 
 if (downloads.value === null) getDownloads();
 

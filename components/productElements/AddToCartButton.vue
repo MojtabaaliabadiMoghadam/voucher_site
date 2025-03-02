@@ -1,5 +1,6 @@
 <script setup>
-const { cart } = useCart();
+import LoadingIcon from "~/components/generalElements/LoadingIcon.vue";
+
 const props = defineProps({
   disabled: { type: Boolean, default: false },
 });

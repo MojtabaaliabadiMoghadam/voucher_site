@@ -131,7 +131,6 @@
 </template>
 
 <script setup lang="ts">
-const { viewer, customer } = useAuth();
 const { t } = useI18n();
 
 const loading = ref<boolean>(false);

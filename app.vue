@@ -24,9 +24,8 @@
 import AppHeader from "~/components/generalElements/AppHeader.vue";
 import MobileMenu from "~/components/generalElements/MobileMenu.vue";
 import AppFooter from "~/components/generalElements/AppFooter.vue";
-
+const isShowingCart = ref(false)
 const route = useRoute();
-const { isShowingCart, toggleCart } = useCart();
 const { isShowingMobileMenu, toggleMobileMenu, addBodyClass, removeBodyClass } = useHelpers();
 const { siteName } = useAppConfig();
 import { useI18n } from 'vue-i18n';

@@ -1,5 +1,4 @@
 <script setup>
-const { resetFilter } = useFiltering();
 </script>
 
 <template>

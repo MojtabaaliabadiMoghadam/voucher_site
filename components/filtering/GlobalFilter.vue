@@ -16,7 +16,6 @@
   </div>
 </template>
 <script setup lang="ts">
-const { getFilter, setFilter, isFiltersActive } = useFiltering();
 
 // داده‌های هاردکد شده برای ویژگی‌ها
 const attribute = ref({

@@ -13,7 +13,6 @@
   </div>
 </template>
 <script setup>
-const { getFilter, setFilter, isFiltersActive } = useFiltering();
 const selectedTerms = ref(getFilter('sale') || []);
 
 const isOpen = ref(true);

@@ -41,5 +41,4 @@ import EmptyCart from "~/components/cartElements/EmptyCart.vue";
 import EmptyCartMessage from "~/components/shopElements/EmptyCartMessage.vue";
 import LoadingIcon from "~/components/generalElements/LoadingIcon.vue";
 
-const { cart, toggleCart, isUpdatingCart } = useCart();
 </script>

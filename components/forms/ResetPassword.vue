@@ -2,7 +2,6 @@
 const { t } = useI18n();
 const router = useRouter();
 const route = useRoute();
-const { viewer, resetPasswordWithKey, loginUser } = useAuth();
 
 const password = ref('');
 const confirmPassword = ref('');

@@ -16,14 +16,9 @@
   </div>
 </template>
 <script setup>
-const { getOrderQuery, setOrderQuery } = await useSorting();
 const { storeSettings } = useAppConfig();
-const selectedOrder = ref(getOrderQuery());
-const orderby = ref(selectedOrder.value.orderBy || 'date');
+const selectedOrder = ref();
+const orderby = ref( 'date');
 const order = ref(selectedOrder.value.order);
 
-// Update the URL when the checkbox is changed
-watch([orderby, order], () => {
-  setOrderQuery(orderby.value, order.value);
-});
 </script>

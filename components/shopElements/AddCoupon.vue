@@ -1,5 +1,4 @@
 <script setup lang="ts">
-const { cart, isUpdatingCoupon, applyCoupon, removeCoupon } = useCart();
 const couponCode = ref<string>('');
 const errorMessage = ref<string>('');
 

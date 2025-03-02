@@ -16,7 +16,6 @@
   </div>
 </template>
 <script setup>
-const { getFilter, setFilter, isFiltersActive } = useFiltering();
 
 const props = defineProps({
   terms: { type: Array, required: true },

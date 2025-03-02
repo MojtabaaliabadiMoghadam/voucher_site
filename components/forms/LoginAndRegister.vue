@@ -76,7 +76,6 @@ import LoadingIcon from "~/components/generalElements/LoadingIcon.vue";
 const {t} = useI18n();
 const route = useRoute();
 const router = useRouter();
-const {loginUser, isPending, registerUser, sendResetPasswordEmail, loginClients} = useAuth();
 
 const userInfo = ref({email: '', password: '', username: '', rememberMe: false});
 const formView = ref('login');

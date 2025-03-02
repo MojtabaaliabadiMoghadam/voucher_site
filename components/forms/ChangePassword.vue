@@ -33,7 +33,6 @@
 </template>
 
 <script setup lang="ts">
-const { viewer, loginUser } = useAuth();
 const { t } = useI18n();
 
 const password = ref<{ new: string; confirm: string }>({ new: '', confirm: '' });

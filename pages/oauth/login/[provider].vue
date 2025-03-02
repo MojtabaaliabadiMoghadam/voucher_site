@@ -4,8 +4,6 @@ import LoadingIcon from "~/components/generalElements/LoadingIcon.vue";
 const route = useRoute();
 const router = useRouter();
 
-const { cart } = useCart();
-const { viewer } = useAuth();
 const showLoader = computed(() => !cart.value && !viewer.value);
 
 const provider = route.params.provider as string;

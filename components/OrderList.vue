@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const router = useRouter();
 const { formatDate, scrollToTop } = useHelpers();
-const { getOrders, orders } = useAuth();
+
 
 if (orders.value === null) getOrders();
 

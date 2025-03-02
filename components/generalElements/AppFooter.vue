@@ -2,7 +2,6 @@
 import Logo from "~/components/generalElements/Logo.vue";
 import WebsiteShortDescription from "~/components/shopElements/WebsiteShortDescription.vue";
 
-const { wishlistLink } = useAuth();
 </script>
 
 <template>

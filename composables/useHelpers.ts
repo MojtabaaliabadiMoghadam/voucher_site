@@ -54,10 +54,8 @@ export function useHelpers() {
     const runtimeConfig = useRuntimeConfig();
     const backEndUrl: string | null = runtimeConfig.public?.BACK_END_URL
     const isDev: boolean = process.env.NODE_ENV === 'development';
-    const useAuthTokenHelpers = () => useState("auth_token_helpers");
 
     const setAuthTokenHelpers = (token: string | null) => {  // تعیین نوع token
-        const authToken = useAuthTokenHelpers();
         authToken.value = token;
     };
 

@@ -1,5 +1,5 @@
 <template>
-  <NuxtLink to="/my-account" :title="linkTitle" class="hidden sm:inline-flex aspect-square items-center">
+  <NuxtLink to="/my-account" title="#" class="hidden sm:inline-flex aspect-square items-center">
     <Transition name="pop-in" mode="out-in">
       <span v-if="avatar" class="relative avatar">
         <img
@@ -25,8 +25,6 @@
 <script setup lang="ts">
 import LoadingIcon from "~/components/generalElements/LoadingIcon.vue";
 
-const { viewer, avatar, logoutUser, isPending, wishlistLink } = useAuth();
-const linkTitle = computed<string>(() => viewer.value?.username || 'Sign In');
 </script>
 <style scoped lang="postcss">
 .pop-in-enter-active,

@@ -30,5 +30,4 @@ import ProductSearch from "~/components/shopElements/ProductSearch.vue";
 import SearchTrigger from "~/components/generalElements/SearchTrigger.vue";
 import CartTrigger from "~/components/cartElements/CartTrigger.vue";
 
-const { isShowingSearch,toggleSearch} = useSearching()
 </script>

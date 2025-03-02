@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-const { updateShippingLocation } = useCheckout();
-const { isBillingAddressEnabled } = useCart();
+
 
 const props = defineProps({
   modelValue: { type: Object, required: true },

@@ -17,15 +17,14 @@
   </form>
 </template>
 <script setup>
-const { getSearchQuery, setSearchQuery, clearSearchQuery } = useSearching();
-const searchQuery = ref(getSearchQuery());
+const searchQuery = ref();
 
 const reset = () => {
   clearSearchQuery();
   searchQuery.value = '';
 };
 
-watch(getSearchQuery, (value) => {
-  if (!value) reset();
-});
+// watch(getSearchQuery, (value) => {
+//   if (!value) reset();
+// });
 </script>

@@ -14,7 +14,6 @@
   </div>
 </template>
 <script setup>
-const { toggleCart, cart } = useCart();
 </script>
 <style lang="postcss">
 /* popIn */

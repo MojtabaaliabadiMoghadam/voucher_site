@@ -1,5 +1,4 @@
 <script setup>
-const { cart, isUpdatingCart } = useCart();
 </script>
 
 <template>

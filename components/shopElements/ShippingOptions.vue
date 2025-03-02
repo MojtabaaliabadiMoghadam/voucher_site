@@ -1,5 +1,4 @@
 <script setup>
-const { updateShippingMethod } = useCart();
 const runtimeConfig = useRuntimeConfig();
 const currencySymbol = runtimeConfig?.public?.CURRENCY_SYMBOL || '$';
 const props = defineProps({

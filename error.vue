@@ -28,14 +28,12 @@ import AppHeader from "~/components/generalElements/AppHeader.vue";
 
 const route = useRoute();
 const { error } = defineProps<{ error: any }>();
-const { isShowingCart, toggleCart } = useCart();
 const { isShowingMobileMenu, toggleMobileMenu, addBodyClass, removeBodyClass } = useHelpers();
 
 const closeCartAndMenu = () => {
-  toggleCart(false);
   toggleMobileMenu(false);
 };
-
+const isShowingCart = ref(false)
 watch([isShowingCart, isShowingMobileMenu], () => {
   isShowingCart.value || isShowingMobileMenu.value ? addBodyClass('overflow-hidden') : removeBodyClass('overflow-hidden');
 });

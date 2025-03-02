@@ -45,7 +45,6 @@
 <script setup lang="ts">
 import StarRating from "~/components/productElements/StarRating.vue";
 
-const { getFilter, setFilter, isFiltersActive } = await useFiltering();
 
 const selectedTerms = ref<string[]>(getFilter('rating'));
 const isOpen = ref(true);

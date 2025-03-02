@@ -1,7 +1,4 @@
 <script setup lang="ts">
-const { allProducts } = useProducts();
-const { clearSearchQuery } = useSearching();
-const { resetFilter } = useFiltering();
 
 const clearAll = () => {
   resetFilter();

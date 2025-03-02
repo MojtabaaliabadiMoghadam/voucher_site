@@ -9,7 +9,7 @@ export const useDataGlobal = defineStore('data', () => {
         {src:'/images/category_2.webp',alt:'category_1',title:"category 1",slug:5,price:'20$'},
         {src:'/images/category_1.webp',alt:'category_2',title:"category 2",slug:6,price:'20$'}
     ])
-    const products = ref([])
+    const products = ref<any>([])
     function generateProducts(count: number) {
         products.value = Array.from({ length: count }, () => ({
             name: faker.commerce.productName(),
@@ -21,7 +21,7 @@ export const useDataGlobal = defineStore('data', () => {
             stockQuantity: faker.number.int({ min: 0, max: 100 }),
             stockStatus: faker.helpers.arrayElement(["IN_STOCK", "OUT_OF_STOCK"]),
             hasAttributes: faker.datatype.boolean(),
-            image: { url: faker.image.url(), alt: faker.lorem.words(3) },
+            src:faker.image.url(),
             attributes: { nodes: [] },
             node: null,
         }));

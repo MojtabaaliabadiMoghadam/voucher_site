@@ -1,6 +1,4 @@
 <script setup>
-const { updateItemQuantity } = useCart();
-const { addToWishlist } = useWishlist();
 const { FALLBACK_IMG } = useHelpers();
 const { storeSettings } = useAppConfig();
 

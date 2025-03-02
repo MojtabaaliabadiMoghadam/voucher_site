@@ -75,8 +75,6 @@
 <script lang="ts" setup>
 import LoadingIcon from "~/components/generalElements/LoadingIcon.vue";
 
-const {logoutUser, viewer, avatar, isPending} = useAuth();
-const {cart} = useCart();
 const route = useRoute();
 
 const activeTab = computed(() => route.query.tab || 'my-details');

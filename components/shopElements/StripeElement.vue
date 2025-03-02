@@ -1,5 +1,4 @@
 <script setup lang="ts">
-const { cart } = useCart();
 const { stripe } = defineProps(['stripe']);
 
 const rawCartTotal = computed(() => cart.value && parseFloat(cart.value.rawTotal as string) * 100);

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-const { updateItemQuantity, isUpdatingCart, cart } = useCart();
 const { debounce } = useHelpers();
 
 const { item } = defineProps({ item: { type: Object, required: true } });
