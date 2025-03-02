@@ -1,5 +1,5 @@
 <template>
-  <div class="cursor-pointer flex font-semibold mt-8 leading-none justify-between items-center">
+  <div class="cursor-pointer flex font-semibold mt-8 leading-none justify-between items-center" @click="isOpen = !isOpen">
     <span>{{ filterTitle }}</span>
     <span class="transform mdi mdi-24px mdi-chevron-down transition-all ease-in duration-150" :class="isOpen ? 'rotate-180' : ''"/>
   </div>

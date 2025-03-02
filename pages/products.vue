@@ -10,7 +10,6 @@
       <ProductGrid />
     </div>
   </div>
-  <NoProductsFound>Could not fetch products from your store. Please check your configuration.</NoProductsFound>
 </template>
 <script setup lang="ts">
 import Filters from "~/components/filtering/Filters.vue";
@@ -19,4 +18,11 @@ import OrderByDropdown from "~/components/shopElements/OrderByDropdown.vue";
 import ShowFilterTrigger from "~/components/filtering/ShowFilterTrigger.vue";
 import ProductGrid from "~/components/shopElements/ProductGrid.vue";
 import NoProductsFound from "~/components/shopElements/NoProductsFound.vue";
+import {useDataGlobal} from "~/stores/globalStore";
+
+const dataGlobal = useDataGlobal()
+onBeforeMount(()=>{
+  dataGlobal.generateProducts(10)
+  console.log(dataGlobal.products)
+})
 </script>

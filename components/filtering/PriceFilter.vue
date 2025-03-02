@@ -1,7 +1,8 @@
 <template>
   <div dir="ltr">
-    <div class="cursor-pointer flex font-semibold mt-8 leading-none justify-between items-center">
-      <span class="transform mdi mdi-24px mdi-chevron-down transition-all ease-in duration-150" :class="isOpen ? 'rotate-180' : ''"/>
+    <div class="cursor-pointer flex font-semibold mt-8 leading-none justify-between items-center"
+         @click="isOpen = !isOpen">
+      <span  class="transform mdi mdi-24px mdi-chevron-down transition-all ease-in duration-150" :class="isOpen ? 'rotate-180' : ''"/>
       <span>قیمت</span>
     </div>
     <div v-show="isOpen" class="mt-3 grid gap-4 grid-cols-2">
@@ -24,18 +25,28 @@
         <label for="price-to" class="leading-none px-2 text-gray-400 absolute" v-html="currencySymbol"/>
       </div>
       <div class="mx-1 mt-1 col-span-full">
-        <Slider v-model="price" :tooltips="false" :min="0" :max="maxPrice" ariaLabelledby="price-from price-to"/>
+        <Slider v-model="price" :tooltips="false" :min="0" :max="maxPrice" ariaLabelledby="price-from price-to"
+                @update="applyPrice"/>
       </div>
     </div>
   </div>
 </template>
-
 <script setup>
 import Slider from '@vueform/slider';
-const maxPrice = 1000;
+import {ref, watch} from 'vue';
+
+const maxPrice = 1000; // مقدار هاردکد شده
 const currencySymbol = '$';
-const price = ref([100, 800]);
+const price = ref([100, 800]); // مقدار هاردکد شده
 const isOpen = ref(true);
+
+
+const applyPrice = () => {
+  console.log('Filtered price:', price.value);
+};
+
 </script>
+
+
 
 <style src="@vueform/slider/themes/default.css"></style>

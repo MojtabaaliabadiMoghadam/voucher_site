@@ -8,7 +8,6 @@
         <ColorFilter v-if="attribute.slug == 'pa_color' || attribute.slug == 'pa_colour'" :attribute />
         <GlobalFilter v-else :attribute />
       </div>
-      <OnSaleFilter />
       <LazyFilteringStarRatingFilter v-if="storeSettings.showReviews" />
       <LazyFilteringResetFiltersButton v-if="isFiltersActive" />
     </div>

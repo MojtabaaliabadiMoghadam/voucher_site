@@ -1,6 +1,6 @@
 <template>
   <Transition name="fade" mode="out-in">
-    <section v-if="!!dataStore.products?.length" class="relative w-full">
+    <section v-if="dataStore.products?.length" class="relative w-full">
       <TransitionGroup name="shrink" tag="div" mode="in-out" class="product-grid">
         <ProductCard v-for="(node, i) in dataStore.products" :key="node.id || i" :node :index="i" />
       </TransitionGroup>
@@ -14,6 +14,7 @@ import ProductCard from "~/components/productElements/ProductCard.vue";
 import Pagination from "~/components/shopElements/Pagination.vue";
 import NoProductsFound from "~/components/shopElements/NoProductsFound.vue";
 import {useDataGlobal} from "~/stores/globalStore";
+
 const dataStore = useDataGlobal()
 const route = useRoute();
 const page = ref(parseInt(route.params.pageNumber as string) || 1);
