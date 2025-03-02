@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import SaleBadge from "~/components/productElements/SaleBadge.vue";
+
 const { FALLBACK_IMG } = useHelpers();
 
 const props = defineProps({
@@ -8,6 +10,7 @@ const props = defineProps({
   activeVariation: { type: Object, required: false },
 });
 
+// تصویر اصلی محصول
 const primaryImage = computed(() => ({
   sourceUrl: props.mainImage.sourceUrl || FALLBACK_IMG,
   title: props.mainImage.title,
@@ -17,23 +20,27 @@ const primaryImage = computed(() => ({
 
 const imageToShow = ref(primaryImage.value);
 
-const galleryImages = computed(() => {
-  // Add the primary image to the start of the gallery and remove duplicates
-  return [primaryImage.value, ...props.gallery.nodes].filter((img, index, self) => index === self.findIndex((t) => t?.databaseId === img?.databaseId));
-});
+// تصاویر گالری بدون تکرار
+const galleryImages = computed(() =>
+    [primaryImage.value, ...props.gallery.nodes].filter(
+        (img, index, self) =>
+            img?.databaseId && index === self.findIndex((t) => t?.databaseId === img?.databaseId)
+    )
+);
 
 const changeImage = (image: any) => {
   if (image) imageToShow.value = image;
 };
 
 watch(
-  () => props.activeVariation,
-  (newVal) => {
-    if (newVal?.image) {
-      const foundImage = galleryImages.value.find((img) => img.databaseId === newVal.image?.databaseId);
-      if (foundImage) imageToShow.value = foundImage;
+    () => props.activeVariation,
+    (newVal) => {
+      if (newVal?.image) {
+        imageToShow.value =
+            galleryImages.value.find((img) => img.databaseId === newVal.image?.databaseId) ||
+            primaryImage.value;
+      }
     }
-  },
 );
 
 const imgWidth = 640;
@@ -43,29 +50,31 @@ const imgWidth = 640;
   <div>
     <SaleBadge :node class="absolute text-base top-4 right-4" />
     <NuxtImg
-      class="rounded-xl object-contain w-full min-w-[350px]"
-      :width="imgWidth"
-      :height="imgWidth"
-      :alt="imageToShow.altText || node.name"
-      :title="imageToShow.title || node.name"
-      :src="imageToShow.sourceUrl || FALLBACK_IMG"
-      fetchpriority="high"
-      placeholder
-      placeholder-class="blur-xl" />
-    <div v-if="gallery.nodes.length" class="my-4 gallery-images">
-      <NuxtImg
-        v-for="galleryImg in galleryImages"
-        :key="galleryImg.databaseId"
-        class="cursor-pointer rounded-xl"
+        class="rounded-xl object-contain w-full min-w-[350px]"
         :width="imgWidth"
         :height="imgWidth"
-        :src="galleryImg.sourceUrl"
-        :alt="galleryImg.altText || node.name"
-        :title="galleryImg.title || node.name"
+        :alt="imageToShow.altText || node.name"
+        :title="imageToShow.title || node.name"
+        :src="imageToShow.sourceUrl"
+        fetchpriority="high"
         placeholder
         placeholder-class="blur-xl"
-        loading="lazy"
-        @click.native="changeImage(galleryImg)" />
+    />
+    <div v-if="galleryImages.length > 1" class="my-4 gallery-images">
+      <NuxtImg
+          v-for="galleryImg in galleryImages"
+          :key="galleryImg.databaseId"
+          class="cursor-pointer rounded-xl"
+          :width="imgWidth"
+          :height="imgWidth"
+          :src="galleryImg.sourceUrl"
+          :alt="galleryImg.altText || node.name"
+          :title="galleryImg.title || node.name"
+          placeholder
+          placeholder-class="blur-xl"
+          loading="lazy"
+          @click="changeImage(galleryImg)"
+      />
     </div>
   </div>
 </template>
@@ -75,10 +84,10 @@ const imgWidth = 640;
   display: flex;
   overflow: auto;
   gap: 1rem;
+}
 
-  &::-webkit-scrollbar {
-    display: none;
-  }
+.gallery-images::-webkit-scrollbar {
+  display: none;
 }
 
 .gallery-images img {
@@ -91,10 +100,10 @@ const imgWidth = 640;
   .gallery-images {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+  }
 
-    img {
-      width: 100%;
-    }
+  .gallery-images img {
+    width: 100%;
   }
 }
 </style>

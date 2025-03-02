@@ -1,18 +1,17 @@
 <template>
-  <div class="cursor-pointer flex font-semibold mt-8 leading-none justify-between items-center" @click="isOpen = !isOpen">
+  <div class="cursor-pointer flex font-semibold mt-8 leading-none justify-between items-center">
     <span>{{ filterTitle }}</span>
-    <span  class="transform mdi mdi-24px mdi-chevron-down transition-all ease-in duration-150" :class="isOpen ? 'rotate-180' : ''"/>
+    <span class="transform mdi mdi-24px mdi-chevron-down transition-all ease-in duration-150" :class="isOpen ? 'rotate-180' : ''"/>
   </div>
   <div v-show="isOpen" class="mt-3 mr-6 max-h-[240px] grid gap-1.5 swatches overflow-auto custom-scrollbar">
     <div v-for="color in attribute.terms" :key="color.slug" :style="{ '--color': color.slug }" :title="color.name">
-      <input :id="color.slug" v-model="selectedTerms" class="hidden" type="checkbox" :value="color.slug" @change="checkboxChanged" />
+      <input :id="color.slug" v-model="selectedTerms" class="hidden" type="checkbox" :value="color.slug" />
       <label :for="color.slug" class="cursor-pointer m-0"></label>
     </div>
   </div>
 </template>
-<script setup lang="ts">
 
-// داده‌های هاردکد شده برای ویژگی‌ها و رنگ‌ها
+<script setup lang="ts">
 const attribute = ref({
   slug: "pa_color",
   label: "رنگ",
@@ -26,20 +25,11 @@ const attribute = ref({
   ],
 });
 
-const selectedTerms = ref(getFilter(attribute.value.slug) || []);
+const selectedTerms = ref([]);
 const filterTitle = ref(attribute.value.label || attribute.value.slug);
 const isOpen = ref(attribute.value.openByDefault);
-
-watch(isFiltersActive, () => {
-  // هنگام پاک شدن فیلترها، چک‌باکس‌ها را غیرفعال کن
-  if (!isFiltersActive.value) selectedTerms.value = [];
-});
-
-// به‌روزرسانی فیلتر هنگام تغییر چک‌باکس
-const checkboxChanged = () => {
-  setFilter(attribute.value.slug, selectedTerms.value);
-};
 </script>
+
 <style scoped lang="postcss">
 .swatches {
   grid-template-columns: repeat(auto-fit, minmax(24px, 1fr));

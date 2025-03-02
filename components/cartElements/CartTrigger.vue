@@ -1,5 +1,5 @@
 <template>
-  <div class="relative cursor-pointer inline-flex" title="Cart" @click="toggleCart">
+  <div class="relative cursor-pointer inline-flex" title="Cart">
     <span class="mr-1 mdi mdi-cart-outline mdi-24px md:mr-0" />
 
     <ClientOnly>

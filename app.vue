@@ -33,8 +33,8 @@ import { useI18n } from 'vue-i18n';
 const { locale, t } = useI18n();
 
 const closeCartAndMenu = () => {
-  toggleCart(false);
-  toggleMobileMenu(false);
+  // toggleCart(false);
+  // toggleMobileMenu(false);
 };
 
 watch([isShowingCart, isShowingMobileMenu], () => {

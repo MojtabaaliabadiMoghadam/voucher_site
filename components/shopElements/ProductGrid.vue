@@ -15,12 +15,8 @@ import Pagination from "~/components/shopElements/Pagination.vue";
 import NoProductsFound from "~/components/shopElements/NoProductsFound.vue";
 import {useDataGlobal} from "~/stores/globalStore";
 const dataStore = useDataGlobal()
-
 const route = useRoute();
-const { productsPerPage } = useHelpers();
-// const { products } = useProducts();
 const page = ref(parseInt(route.params.pageNumber as string) || 1);
-// const productsToShow = computed(() => products.value.slice((page.value - 1) * productsPerPage, page.value * productsPerPage));
 </script>
 <style lang="postcss" scoped>
 .product-grid {

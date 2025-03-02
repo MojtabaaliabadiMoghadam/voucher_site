@@ -1,14 +1,7 @@
-<script setup lang="ts">
-import { StockStatusEnum } from '#woo';
-
-defineProps({
-  stockStatus: { type: String, required: false },
-});
-</script>
-
 <template>
-  <span v-if="stockStatus === StockStatusEnum.IN_STOCK" class="text-green-600">{{ $t('messages.shop.inStock') }}</span>
-  <span v-else-if="stockStatus === StockStatusEnum.OUT_OF_STOCK" class="text-red-600">{{ $t('messages.shop.outOfStock') }}</span>
-  <span v-else-if="stockStatus === StockStatusEnum.ON_BACKORDER" class="text-yellow-600">{{ $t('messages.shop.onBackorder') }}</span>
-  <span v-else class="text-gray-600">Loading</span>
+  <span class="text-green-600">موجود در انبار</span>
+  <!-- یا می‌توانید وضعیت‌های دیگری مانند: -->
+  <!-- <span class="text-red-600">تمام شده</span> -->
+  <!-- <span class="text-yellow-600">در انتظار سفارش</span> -->
+  <!-- <span class="text-gray-600">در حال بارگذاری...</span> -->
 </template>

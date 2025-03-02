@@ -1,16 +1,16 @@
 <template>
-  <div class="container flex items-start gap-16" v-if="dataStore.products">
-    <Filters v-if="storeSettings.showFilters" />
+  <div class="container flex items-start gap-16">
+    <Filters v-if="true" />
     <div class="w-full">
       <div class="flex items-center justify-between w-full gap-4 mt-8 md:gap-8">
         <ProductResultCount />
-        <OrderByDropdown class="hidden md:inline-flex" v-if="storeSettings.showOrderByDropdown" />
-        <ShowFilterTrigger v-if="storeSettings.showFilters" class="md:hidden" />
+        <OrderByDropdown class="hidden md:inline-flex" v-if="true" />
+        <ShowFilterTrigger class="md:hidden" v-if="true" />
       </div>
       <ProductGrid />
     </div>
   </div>
-  <NoProductsFound v-else>Could not fetch products from your store. Please check your configuration.</NoProductsFound>
+  <NoProductsFound>Could not fetch products from your store. Please check your configuration.</NoProductsFound>
 </template>
 <script setup lang="ts">
 import Filters from "~/components/filtering/Filters.vue";
@@ -19,15 +19,4 @@ import OrderByDropdown from "~/components/shopElements/OrderByDropdown.vue";
 import ShowFilterTrigger from "~/components/filtering/ShowFilterTrigger.vue";
 import ProductGrid from "~/components/shopElements/ProductGrid.vue";
 import NoProductsFound from "~/components/shopElements/NoProductsFound.vue";
-import {useDataGlobal} from "~/stores/globalStore";
-const dataStore = useDataGlobal()
-dataStore.generateProducts(10)
-const route = useRoute();
-const { storeSettings } = useAppConfig();
-
-useHead({
-  title: `Products`,
-  meta: [{ hid: 'description', name: 'description', content: 'Products' }],
-});
 </script>
-
