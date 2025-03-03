@@ -7,7 +7,7 @@
           :height="imgHeight"
           :src="node.src || '/images/placeholder.jpg'"
           :alt="node.image?.altText || node.name || 'Product image'"
-          :title="node.title"
+          :title="node.name"
           :loading="index <= 3 ? 'eager' : 'lazy'"
           :sizes="`sm:${imgWidth / 2}px md:${imgWidth}px`"
           class="rounded-lg object-top object-cover w-full aspect-9/8 md:h-[280px] h-[150px]"
@@ -18,9 +18,9 @@
     <div class="p-2">
       <StarRating v-if="storeSettings.showReviews" :rating="3" :count="3" />
       <NuxtLink v-if="node.slug" :to="`/product/${decodeURIComponent(node.slug)}`" :title="node.name">
-        <h2 class="mb-2 font-light leading-tight group-hover:text-primary">{{ node.title }}</h2>
+        <h2 class="mb-2 font-light leading-tight group-hover:text-primary">{{ node.name }}</h2>
       </NuxtLink>
-      <ProductPrice class="text-sm" :sale-price="'5$'" :regular-price="node.price" />
+      <ProductPrice class="text-sm" :regular-price="node.price" />
     </div>
   </div>
 </template>

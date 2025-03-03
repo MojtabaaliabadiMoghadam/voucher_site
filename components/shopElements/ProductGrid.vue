@@ -1,8 +1,8 @@
 <template>
   <Transition name="fade" mode="out-in">
-    <section v-if="dataStore.products?.length" class="relative w-full">
-      <TransitionGroup name="shrink" tag="div" mode="in-out" class="product-grid">
-        <ProductCard v-for="(node, i) in dataStore.products" :key="node.id || i" :node :index="i" />
+    <section v-if="dataStore.filteredProducts?.length" class="relative w-full">
+      <TransitionGroup name="list" tag="div" mode="in-out" class="product-grid">
+        <ProductCard v-for="(node, i) in dataStore.filteredProducts" :key="node.id || i" :node :index="i" />
       </TransitionGroup>
       <Pagination />
     </section>
@@ -35,27 +35,25 @@ const page = ref(parseInt(route.params.pageNumber as string) || 1);
   }
 }
 
-.shrink-move {
+.list-move {
   transition: all 400ms;
 }
 
-.shrink-leave-active {
-  transition: transform 300ms;
+.list-move, /* apply transition to moving elements */
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+/* ensure leaving items are taken out of layout flow so that moving
+   animations can be calculated correctly. */
+.list-leave-active {
   position: absolute;
-  opacity: 0;
-}
-
-.shrink-enter-active {
-  transition:
-    opacity 400ms ease-out 200ms,
-    transform 400ms ease-out;
-  will-change: opacity, transform;
-}
-
-.shrink-enter,
-.shrink-leave-to,
-.shrink-enter-from {
-  opacity: 0;
-  transform: scale(0.75) translateY(25%);
 }
 </style>
