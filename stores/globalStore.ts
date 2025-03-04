@@ -15,6 +15,7 @@ export const useDataGlobal = defineStore("data", () => {
     const orderby = ref<string>("date");
     const order = ref<"ASC" | "DESC">("DESC");
 
+
     function generateProducts(count: number) {
         if (!lock.value) return null;
         products.value = Array.from({ length: count }, () => ({

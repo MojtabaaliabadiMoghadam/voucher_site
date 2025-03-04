@@ -1,29 +1,23 @@
 <template>
   <div class="max-w-lg mx-auto my-16 min-h-[600px] text-center">
-    <Logo/>
+<!--    <Logo/>-->
     <div class="flex flex-col my-2">
-      <h1 class="text-xl font-semibold lg:text-3xl">{{ formTitle }}</h1>
-      <p class="text-gray-500 mt-2">خوش آمدید روش ورود خود را انتخاب کنید</p>
+      <h1 class="text-xl font-semibold lg:text-3xl">همه چی از اینجا شروع میشه</h1>
+      <p class="text-gray-500 mt-2">برای دسترسی به اطلاعات لطفا به یکی از روش های زیر وارد شوید.</p>
     </div>
 
-    <LoginProviders class="my-8" v-if="formView === 'login' || formView === 'register'"/>
+    <LoginProviders class="my-8"/>
 
     <form class="mt-6" @submit.prevent="handleFormSubmit(userInfo)">
-      <div v-if="formView === 'register' || formView === 'forgotPassword'" for="email">
-        <input id="email" v-model="userInfo.email" :placeholder="inputPlaceholder.email" autocomplete="email"
-               type="text" required/>
-      </div>
-      <p v-if="formView === 'forgotPassword'" class="text-sm text-gray-500">
-        {{ $t('messages.account.enterEmailOrUsernameForReset') }}</p>
-      <div v-if="formView !== 'forgotPassword'">
+      <div>
         <input class="mt-1" v-model="userInfo.username" :placeholder="inputPlaceholder.username" autocomplete="username"
                type="text" required/>
-        <PasswordInput
-            className="border rounded-lg w-full p-3 px-4 bg-white mt-1"
-            v-model="userInfo.password"
-            :placeholder="passwordLabel"
-            :autocomplete="formView === 'login' ? 'current-password' : 'new-password'"
-            :required="true"/>
+<!--        <PasswordInput-->
+<!--            className="border rounded-lg w-full p-3 px-4 bg-white mt-1"-->
+<!--            v-model="userInfo.password"-->
+<!--            :placeholder="passwordLabel"-->
+<!--            :autocomplete="formView === 'login' ? 'current-password' : 'new-password'"-->
+<!--            :required="true"/>-->
       </div>
       <Transition name="scale-y" mode="out-in">
         <div v-if="message" class="my-4 text-sm text-green-500" v-html="message"></div>
@@ -31,39 +25,12 @@
       <Transition name="scale-y" mode="out-in">
         <div v-if="errorMessage" class="my-4 text-sm text-red-500" v-html="errorMessage"></div>
       </Transition>
-
-      <div class="flex items-center justify-between mt-4">
-        <label class="flex items-center gap-2"><input v-model="userInfo.rememberMe" type="checkbox"/>مرا به خاطر بسپار
-        </label>
-        <div class="font-semibold cursor-pointer text-sm text-primary hover:text-primary"
-             @click="navigate('forgotPassword')" v-if="formView === 'login'">
-          فراموشی رمز عبور ؟
-        </div>
-      </div>
-
       <!-- Login button -->
       <button class="flex items-center justify-center gap-4 my-6 text-lg">
         <LoadingIcon v-if="isPending" stroke="4" size="16" color="#fff"/>
         <span>{{ buttonText }}</span>
       </button>
     </form>
-
-    <div v-if="formView === 'login'" class="my-6 text-center">
-      {{ $t('messages.account.noAccount') }}
-      <a class="font-semibold cursor-pointer text-primary" @click="navigate('register')">
-        {{ $t('messages.account.accountRegister') }} </a>.
-    </div>
-
-    <div v-if="formView === 'register'" class="my-2 text-center justify-center">
-      {{ $t('messages.account.hasAccount') }}
-      <a class="font-semibold cursor-pointer text-primary" @click="navigate('login')">
-        {{ $t('messages.general.please') }} {{ $t('messages.account.accountLogin') }}
-      </a>
-    </div>
-
-    <div class="my-8 text-center cursor-pointer" @click="navigate('login')" v-if="formView === 'forgotPassword'">
-      {{ $t('messages.account.backToLogin') }}
-    </div>
   </div>
 </template>
 
