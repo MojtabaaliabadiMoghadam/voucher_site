@@ -25,4 +25,7 @@ onBeforeMount(()=>{
   dataGlobal.generateProducts(10)
   console.log(dataGlobal.products)
 })
+onUnmounted(()=>{
+  dataGlobal.resetFilters()
+})
 </script>

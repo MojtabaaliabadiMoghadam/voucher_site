@@ -1,4 +1,3 @@
-
 import { defineStore } from "pinia";
 import { faker } from "@faker-js/faker";
 import { useRoute, useRouter } from "vue-router";
@@ -34,7 +33,18 @@ export const useDataGlobal = defineStore("data", () => {
         lock.value = false;
     }
 
-    // فیلتر و مرتب‌سازی ترکیبی محصولات
+    // list of category should be delete after add api
+    const categories = ref([
+        {src:'/images/category_1.webp',alt:'category_1',title:"category 1",slug:1,price:'20$'},
+        {src:'/images/category_2.webp',alt:'category_2',title:"category 2",slug:2,price:'20$'},
+        {src:'/images/category_3.webp',alt:'category_3',title:"category 3",slug:3,price:'20$'},
+        {src:'/images/category_4.webp',alt:'category_4',title:"category 4",slug:4,price:'20$'},
+        {src:'/images/category_2.webp',alt:'category_1',title:"category 1",slug:5,price:'20$'},
+        {src:'/images/category_1.webp',alt:'category_2',title:"category 2",slug:6,price:'20$'}
+    ])
+
+
+    // this computed property set filter in products
     const filteredProducts = computed(() => {
         let result = products.value.filter(
             (product: any) =>
@@ -80,6 +90,17 @@ export const useDataGlobal = defineStore("data", () => {
         updateQuery();
     }
 
+    //this function clear all filter from query and variables
+    function resetFilters() {
+        priceFilter.value = { min: 0, max: 1000 };
+        categoryFilter.value = null;
+        orderby.value = "date";
+        order.value = "DESC";
+
+        // حذف کامل کوئری‌ها از آدرس
+        router.replace({ path: route.path, query: {} });
+    }
+
 
     function setOrderBy(value: string) {
         orderby.value = value;
@@ -115,7 +136,9 @@ export const useDataGlobal = defineStore("data", () => {
         setOrderBy,
         toggleOrder,
         setPriceFilter,
-        setCategoryFilter
+        setCategoryFilter,
+        categories,
+        resetFilters
     };
 });
 

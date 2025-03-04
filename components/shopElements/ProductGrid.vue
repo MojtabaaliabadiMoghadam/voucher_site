@@ -1,8 +1,9 @@
 <template>
   <Transition name="fade" mode="out-in">
+
     <section v-if="dataStore.filteredProducts?.length" class="relative w-full">
       <TransitionGroup name="list" tag="div" mode="in-out" class="product-grid">
-        <ProductCard v-for="(node, i) in dataStore.filteredProducts" :key="node.id || i" :node :index="i" />
+        <ProductCard v-for="(node, i) in dataStore.filteredProducts" :key="node" :node :index="i" />
       </TransitionGroup>
       <Pagination />
     </section>
@@ -33,10 +34,6 @@ const page = ref(parseInt(route.params.pageNumber as string) || 1);
   .product-grid {
     grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
   }
-}
-
-.list-move {
-  transition: all 400ms;
 }
 
 .list-move, /* apply transition to moving elements */
