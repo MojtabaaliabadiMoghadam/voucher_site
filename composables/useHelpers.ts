@@ -159,6 +159,7 @@ export function useHelpers() {
         headers = {
             Accept: "application/json",
             "Content-Type": "application/json",
+            "Language":"fa",
             ...headers,
         };
         const options = {
