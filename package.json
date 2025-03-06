@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@faker-js/faker": "^9.5.0",
+    "@formkit/auto-animate": "^0.8.2",
     "@mdi/font": "^7.4.47",
     "@pinia/nuxt": "^0.5.5",
     "@primevue/nuxt-module": "^4.1.0",

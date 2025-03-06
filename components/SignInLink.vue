@@ -1,5 +1,5 @@
 <template>
-  <NuxtLink to="/my-account" title="#" class="hidden sm:inline-flex aspect-square items-center">
+  <button @click="CheckAndPushToAccount" title="#" class="hidden sm:inline-flex aspect-square items-center">
     <Transition name="pop-in" mode="out-in">
       <span v-if="avatar" class="relative avatar">
         <img
@@ -20,11 +20,21 @@
       </span>
       <span v-else class="border mdi mdi-account-outline mdi-24px border-transparent" />
     </Transition>
-  </NuxtLink>
+  </button>
 </template>
 <script setup lang="ts">
 import LoadingIcon from "~/components/generalElements/LoadingIcon.vue";
+import {useLoginStore} from "~/stores/loginStore";
+const loginStore = useLoginStore()
+const router = useRouter()
 
+function CheckAndPushToAccount(){
+  if (loginStore.isAuthenticated){
+    router.push('/my-account')
+  }else{
+    router.push('/login')
+  }
+}
 </script>
 <style scoped lang="postcss">
 .pop-in-enter-active,

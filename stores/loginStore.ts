@@ -7,7 +7,8 @@ export const useLoginStore = defineStore("login", () => {
     const mobile = ref<string>('09158283028')
     const email = ref<string>('')
     const { getUrl, fetchData ,showSuccessToast,showErrorToast} = useHelpers()
-
+    const router = useRouter()
+    const isAuthenticated = computed(() => !!useCookie('auth_token').value);
     // ذخیره secret در کوکی (با زمان انقضا 5 دقیقه)
     const secret = useCookie<string | null>("login_secret", { maxAge: 300 })
 
@@ -15,7 +16,8 @@ export const useLoginStore = defineStore("login", () => {
     const otpTimer = ref<number>(0)
     const otpTryCount = ref<number>(0)
     const maxTry = ref<number>(5)
-
+    const otp = ref(['', '', '', '', '']);
+    const finalOtp = ref('');
     async function RequestForm() {
         let url = getUrl('auth/request')
         const requestData: Record<string, any> = {
@@ -49,45 +51,47 @@ export const useLoginStore = defineStore("login", () => {
 
     async function resendOTP() {
         if (otpTryCount.value >= maxTry.value) {
-            alert('You have reached the maximum retry limit!')
+            showErrorToast('شما بیش از حد درخواست داده اید دقایق دیگر امتحان کنید!')
             return
         }
 
         try {
-            let url = getUrl('auth/resend-otp')
-            const response = await fetchData({
+            let url = getUrl('auth/resend')
+            const {status,data,message} = await fetchData({
                 method: 'POST',
                 url,
                 data: { secret: secret.value }
             })
 
-            if (response.status === 'success') {
-                otpTimer.value = response.data.code.timer
-                otpTryCount.value = response.data.code.try_count
+            if (status == 200) {
+                otpTimer.value = data.code.timer
+                maxTry.value = data.code.max_try
+                otpTryCount.value = data.code.try_count
+                showSuccessToast(message)
             } else {
-                errorMessage.value = response.message
+                showErrorToast(message)
             }
         } catch (error) {
             console.error('Resend OTP failed', error)
         }
     }
 
-    async function verifyOTP(otp: string) {
+    async function verifyOTP() {
         try {
-            let url = getUrl('auth/verify-otp')
-            const response = await fetchData({
+            let url = getUrl('auth/login-otp')
+            const {status,message,data} = await fetchData({
                 method: 'POST',
                 url,
-                data: { otp, secret: secret.value }
+                data: { otp:finalOtp.value, secret: secret.value }
             })
-
-            if (response.status === 'success' && response.data.token) {
+            if (status == 200) {
                 const token = useCookie<string | null>("auth_token", { maxAge: 60 * 60 * 24 * 7 }) // 7 روز ذخیره
-                token.value = response.data.token
-                secret.value = null // حذف secret
-                return navigateTo('/dashboard')
-            } else {
-                errorMessage.value = response.message
+                token.value = data?.token?.access_token
+                secret.value = null
+                showSuccessToast(message)
+                await router.push('/my-account')
+            }else{
+                showErrorToast(message)
             }
         } catch (error) {
             console.error('Invalid OTP', error)
@@ -126,6 +130,9 @@ export const useLoginStore = defineStore("login", () => {
         otpTimer,
         otpTryCount,
         verifyOTP,
-        loginWithPassword
+        loginWithPassword,
+        otp,
+        finalOtp,
+        isAuthenticated
     }
 })
