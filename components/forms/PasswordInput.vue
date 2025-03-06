@@ -21,14 +21,14 @@ const handleInputChanged = (e: Event) => {
   <div class="relative flex items-center w-full">
     <input
       :type="showPassword ? 'text' : 'password'"
-      class="flex items-center flex-1"
+      class="flex items-center flex-1 mt-1 rounded-lg mb-4 w-full font-bold  py-3"
       :value="modelValue"
       @input="handleInputChanged"
       :class="className"
       :placeholder="placeholder"
       :autocomplete="autocomplete"
       :required="required" />
-    <Icon name="ion:eye-outline" size="20" class="absolute cursor-pointer right-4" @click="showPassword = !showPassword" v-if="showPassword" />
-    <Icon name="ion:eye-off-outline" size="20" class="absolute cursor-pointer right-4" @click="showPassword = !showPassword" v-else />
+    <span  class="absolute cursor-pointer left-4 top-3 mdi mdi-24px mdi-eye-outline" @click="showPassword = !showPassword" v-if="showPassword" />
+    <Icon  class="absolute cursor-pointer left-4 top-3 mdi mdi-24px mdi-eye-lock-outline" @click="showPassword = !showPassword" v-else />
   </div>
 </template>

@@ -55,9 +55,6 @@ export function useHelpers() {
     const backEndUrl: string | null = runtimeConfig.public?.BACK_END_URL
     const isDev: boolean = process.env.NODE_ENV === 'development';
 
-    const setAuthTokenHelpers = (token: string | null) => {  // تعیین نوع token
-        authToken.value = token;
-    };
 
     function isFilled(value: any): boolean {
         return value !== undefined && value !== null && value !== '';
@@ -472,7 +469,6 @@ export function useHelpers() {
         fetchData,
         getUrl,
         addBackendToImageUrl,
-        setAuthTokenHelpers,
         showSuccessToast,
         showErrorToast,
         extractDate,

@@ -73,7 +73,10 @@
 </template>
 <script lang="ts" setup>
 import LoadingIcon from "~/components/generalElements/LoadingIcon.vue";
-
+import WishList from "~/components/shopElements/WishList.vue";
+import {useLoginStore} from "~/stores/loginStore";
+const loginStore = useLoginStore()
+const router = useRouter();
 const route = useRoute();
 
 const activeTab = computed(() => route.query.tab || 'my-details');
@@ -82,6 +85,11 @@ const showLoader = false
 useSeoMeta({
   title: `My Account`,
 });
+onMounted(()=>{
+  if (!loginStore.isAuthenticated){
+    router.push('/login')
+  }
+})
 </script>
 <style lang="postcss" scoped>
 nav a {

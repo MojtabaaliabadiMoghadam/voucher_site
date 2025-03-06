@@ -4,7 +4,9 @@
       <h1 class="text-xl font-semibold lg:text-3xl">{{formTitle}}</h1>
       <p class="text-gray-500 mt-2">{{formDescription}}</p>
     </div>
-
+    <div>
+      <PasswordInput v-model="passwordValue" :placeholder="passwordLabel" autocomplete="current-password" required />
+    </div>
     <LoginProviders v-if="loginStore.loginStatus === 'login'" class="my-8"/>
     <form class="mt-6" @submit.prevent="handleFormSubmit">
       <Transition name="fade" mode="out-in">
@@ -50,9 +52,9 @@
         </div>
 
         <!-- ورود با رمز عبور -->
-        <div v-else-if="loginStore.loginStatus === 'login-password'">
-          <PasswordInput v-model="passwordValue" :placeholder="passwordLabel" autocomplete="current-password" required />
-        </div>
+<!--        <div v-else-if="loginStore.loginStatus === 'login-password'">-->
+<!--          <PasswordInput v-model="passwordValue" :placeholder="passwordLabel" autocomplete="current-password" required />-->
+<!--        </div>-->
       </Transition>
 
       <!-- دکمه ورود -->

@@ -101,19 +101,20 @@ export const useLoginStore = defineStore("login", () => {
     async function loginWithPassword(password: string) {
         try {
             let url = getUrl('auth/login-password')
-            const response = await fetchData({
+            const {status,data,message} = await fetchData({
                 method: 'POST',
                 url,
                 data: { password, secret: secret.value }
             })
 
-            if (response.status === 'success' && response.data.token) {
+            if (status == 200 && data.token) {
                 const token = useCookie<string | null>("auth_token", { maxAge: 60 * 60 * 24 * 7 })
-                token.value = response.data.token
+                token.value = data?.token?.access_token
                 secret.value = null
-                return navigateTo('/dashboard')
+                showSuccessToast(message)
+                await router.push('/my-account')
             } else {
-                errorMessage.value = response.message
+                showErrorToast(message)
             }
         } catch (error) {
             console.error('Login failed', error)
