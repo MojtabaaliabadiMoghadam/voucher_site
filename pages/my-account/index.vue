@@ -32,7 +32,7 @@
               {{ $t('messages.general.myDetails') }}
             </NuxtLink>
             <NuxtLink to="/my-account?tab=authentication" class="flex items-center gap-4 p-2 px-4"
-                      :class="{ active: activeTab == 'my-details' }">
+                      :class="{ active: activeTab == 'authentication' }">
               <span class="mdi mdi-24px mdi-information-outline" />
               {{ $t('احراز هویت') }}
             </NuxtLink>
