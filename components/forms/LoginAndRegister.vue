@@ -1,5 +1,5 @@
 <template>
-  <div ref="parent" class="max-w-lg mx-auto my-16 min-h-[600px] text-center px-4">
+  <div ref="parent" class="max-w-lg mx-auto my-16 min-h-[600px] text-center px-8">
     <div class="flex flex-col my-2">
       <h1 class="text-xl font-semibold lg:text-3xl">{{formTitle}}</h1>
       <p class="text-gray-500 mt-2">{{formDescription}}</p>
@@ -60,12 +60,12 @@
         <LoadingIcon v-if="isPending" stroke="4" size="16" color="#fff"/>
         <span v-else>{{ buttonText }}</span>
       </button>
-      <button v-if="loginStore.loginStatus != 'login'"
+      <button v-if="loginStore.loginStatus === 'login-otp'"
               @click="loginStore.loginStatus = 'login'"
               type="button"
               class="flex items-center justify-center gap-4 my-6 text-lg h-[32px] bg-white text-black
                ring-2 ring-transparent hover:ring-gray-300 hover:border-gray-500 rounded-lg mb-4 font-bold w-full py-3">
-        <span> تغییر شماره موبایل </span>
+        <span>{{titleButtonComputed}}</span>
       </button>
 
     </form>
@@ -89,7 +89,13 @@ const parent = ref(null);
 const isLoadedCountDown = ref<boolean>(false)
 const countdown = ref<number|null>(null);
 
-
+const titleButtonComputed = computed(()=>{
+  if (loginStore.loginWith === 'mobile'){
+    return 'تغییر شماره موبایل'
+  }else{
+    return 'تغییر ایمیل'
+  }
+})
 
 const handleFormSubmit = async () => {
   isPending.value = true;

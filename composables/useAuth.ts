@@ -1,3 +1,5 @@
+import {useCookie} from "#app";
+
 export function useAuth() {
     // ایجاد یک کوکی برای ذخیره توکن
     const token = useCookie<string | null>('auth_token', {
@@ -7,7 +9,7 @@ export function useAuth() {
         sameSite: 'strict', // جلوگیری از ارسال کوکی به سایت‌های دیگر
         path: '/' // مسیر کوکی
     })
-
+    const isLogin = computed(() => !!useCookie('auth_token').value);
     // ذخیره توکن در کوکی
     const setToken = (newToken: string) => {
         token.value = newToken
@@ -21,5 +23,5 @@ export function useAuth() {
         token.value = null
     }
 
-    return { token, setToken, getToken, removeToken }
+    return { token, setToken, getToken, removeToken ,isLogin}
 }

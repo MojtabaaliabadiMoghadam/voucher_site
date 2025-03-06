@@ -1,21 +1,3 @@
-<script setup lang="ts">
-const router = useRouter();
-const { formatDate, scrollToTop } = useHelpers();
-
-
-if (orders.value === null) getOrders();
-
-const refresh = () => {
-  orders.value = null;
-  scrollToTop();
-  getOrders();
-};
-
-const goToOrder = (orderNumber: string): void => {
-  router.push(`/order-summary/${orderNumber}`);
-};
-</script>
-
 <template>
   <div class="bg-white rounded-lg flex shadow min-h-[250px] p-4 md:p-12 justify-center items-center">
     <div v-if="orders && orders.length" class="w-full">
@@ -37,17 +19,30 @@ const goToOrder = (orderNumber: string): void => {
           </tr>
         </tbody>
       </table>
-      <div class="text-center flex justify-center w-full mt-8">
-        <button type="button" @click="refresh" class="flex items-center gap-1 text-sm leading-none hover:bg-gray-50 p-2 rounded">
-          <span>Reresh list</span>
-          <Icon name="ion:refresh-outline" />
-        </button>
-      </div>
     </div>
     <div v-else-if="orders && orders.length === 0" class="min-h-[250px] flex items-center justify-center text-gray-500 text-lg">No orders found.</div>
     <LoadingIcon v-else size="24" stroke="2" />
   </div>
 </template>
+<script setup lang="ts">
+import OrderStatusLabel from "~/components/shopElements/OrderStatusLabel.vue";
+import LoadingIcon from "~/components/generalElements/LoadingIcon.vue";
+
+const router = useRouter();
+const { formatDate, scrollToTop } = useHelpers();
+
+const orders = ref([
+  {
+    orderNumber: 2969,
+    date: "2025-03-05T17:46:03.000000Z",
+    status: "FAILED",
+    total: "€46.00"
+  }
+]);
+const goToOrder = (orderNumber: string): void => {
+  router.push(`/order-summary/${orderNumber}`);
+};
+</script>
 
 <style lang="postcss" scoped>
 tbody tr:nth-child(odd) {

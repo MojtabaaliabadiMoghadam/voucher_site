@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { useCookie } from "#app";
 
 export const useLoginStore = defineStore("login", () => {
-    const loginStatus = ref<'login' | 'login-otp' | 'login-password'>('login')
+    const loginStatus = ref<'login' |  'login-otp' | 'login-password'>('login')
     const loginWith = ref<'mobile' | 'email'>('mobile')
     const mobile = ref<string>('09158283028')
     const email = ref<string>('')
@@ -18,6 +18,7 @@ export const useLoginStore = defineStore("login", () => {
     const maxTry = ref<number>(5)
     const otp = ref(['', '', '', '', '']);
     const finalOtp = ref('');
+
     async function RequestForm() {
         let url = getUrl('auth/request')
         const requestData: Record<string, any> = {
@@ -36,7 +37,7 @@ export const useLoginStore = defineStore("login", () => {
                 secret.value = data.secret // ذخیره secret در کوکی
             }
 
-            if (data.type === 'login-otp') {
+            if (data.type === 'login-otp' || data.type === 'register') {
                 otpTimer.value = data?.code?.timer
                 otpTryCount.value = data?.code?.try_count
                 maxTry.value = data?.code?.max_try
@@ -121,6 +122,27 @@ export const useLoginStore = defineStore("login", () => {
         }
     }
 
+    async function logout() {
+        try {
+            let url = getUrl('auth/logout')
+            const {status,message,data} = await fetchData({
+                method: 'POST',
+                url,
+                authorization:true
+            })
+            if (status == 200) {
+                showSuccessToast(message)
+                const token = useCookie<string | null>("auth_token");
+                token.value = null;
+                await router.push('/login')
+            }else{
+                showErrorToast(message)
+            }
+        } catch (error) {
+            console.error('Invalid OTP', error)
+        }
+    }
+
     return {
         mobile,
         email,
@@ -134,6 +156,7 @@ export const useLoginStore = defineStore("login", () => {
         loginWithPassword,
         otp,
         finalOtp,
-        isAuthenticated
+        isAuthenticated,
+        logout
     }
 })

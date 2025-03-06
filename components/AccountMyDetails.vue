@@ -5,7 +5,11 @@
     <ChangePassword />
   </div>
 </template>
-
+<script setup lang="ts">
+import PersonalInformation from "~/components/forms/PersonalInformation.vue";
+import BillingAndShipping from "~/components/forms/BillingAndShipping.vue";
+import ChangePassword from "~/components/forms/ChangePassword.vue";
+</script>
 <style lang="postcss">
 .account-form input[type='text'],
 .account-form input[type='email'],

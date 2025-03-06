@@ -1,5 +1,6 @@
 import type {AxiosResponse} from 'axios';
 import axios from 'axios';
+import {useCookie} from "#app";
 // axios.defaults.withCredentials = true;
 
 
@@ -25,6 +26,7 @@ interface FetchDataOptions {
     url: string;
     data?: any | null;
     method?: string | HttpMethods;
+    authorization?: boolean;
     headers?: Record<string, string>;
     parameters?: Record<string, string> | any;
     content_type?: string;
@@ -148,6 +150,7 @@ export function useHelpers() {
             data = null,
             method = 'get',
             headers = {},
+            authorization = false,
             parameters = null,
         }: FetchDataOptions
     ) {
@@ -159,6 +162,16 @@ export function useHelpers() {
             "Language":"fa",
             ...headers,
         };
+
+        if (authorization) {
+            const token = useCookie('auth_token').value;
+            if (token) {
+                headers = {
+                    'Authorization': `Bearer ${token}`,
+                    ...headers,
+                };
+            }
+        }
         const options = {
             url,
             method,
