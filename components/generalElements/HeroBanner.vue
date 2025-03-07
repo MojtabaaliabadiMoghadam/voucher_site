@@ -1,6 +1,6 @@
 <template>
   <div class="relative mx-auto">
-    <NuxtImg
+      <img
       width="1400"
       height="800"
       class="object-cover w-full h-[420px] lg:h-[560px] xl:h-[640px]"

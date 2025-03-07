@@ -49,7 +49,7 @@ const imgWidth = 640;
 <template>
   <div>
     <SaleBadge :node class="absolute text-base top-4 right-4" />
-    <NuxtImg
+    <img
         class="rounded-xl object-contain w-full min-w-[350px]"
         :width="imgWidth"
         :height="imgWidth"
@@ -61,7 +61,7 @@ const imgWidth = 640;
         placeholder-class="blur-xl"
     />
     <div v-if="galleryImages.length > 1" class="my-4 gallery-images">
-      <NuxtImg
+      <img
           v-for="galleryImg in galleryImages"
           :key="galleryImg.databaseId"
           class="cursor-pointer rounded-xl"

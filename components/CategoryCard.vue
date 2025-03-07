@@ -3,7 +3,7 @@
     v-if="node"
     :to="`/product-category/${decodeURIComponent(node.slug)}`"
     class="relative flex justify-center overflow-hidden border border-white rounded-xl item snap-mandatory snap-x">
-    <NuxtImg
+    <img
       :width="imgWidth"
       :height="imgHeight"
       class="absolute inset-0 object-cover w-full h-full"

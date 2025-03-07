@@ -8,13 +8,15 @@ export default defineNuxtConfig({
     '~/assets/css/main.css',
     '@mdi/font/css/materialdesignicons.min.css',
   ],
-
   modules: [
     '@pinia/nuxt',
     '@primevue/nuxt-module',
     '@nuxtjs/i18n',
     '@nuxt/image'
   ],
+  image: {
+    dir: 'public', // مشخص کردن مسیر تصاویر در پوشه `public`
+  },
   primevue: {
     locale: {
       rtl: true // فعال‌سازی حالت راست‌به‌چپ
