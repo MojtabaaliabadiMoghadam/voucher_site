@@ -22,5 +22,5 @@
   </div>
 </template>
 <script setup lang="ts">
-
+console.log('run')
 </script>
