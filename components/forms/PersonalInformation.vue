@@ -2,26 +2,38 @@
   <form  class="bg-white rounded-lg shadow" @submit.prevent="saveChanges">
     <div class="grid gap-6 p-8 md:grid-cols-2">
       <h3 class="text-xl font-semibold col-span-full">{{ $t('messages.account.personalInfo') }}</h3>
-
       <div class="w-full">
-        <label for="first-name">{{ $t('messages.billing.firstName') }}</label>
-        <input id="first-name"  placeholder="John" autocomplete="given-name" type="text" />
+        <label for="first-name">{{ $t('messages.billing.name') }}</label>
+        <input id="first-name" v-model="dataUserStore.dataUser.name" autocomplete="given-name" type="text" />
       </div>
-
       <div class="w-full">
-        <label for="last-name">{{ $t('messages.billing.lastName') }}</label>
-        <input id="last-name"  placeholder="Doe" autocomplete="family-name" type="text" />
+        <label for="first-name">{{ $t('messages.account.melli_code') }}</label>
+        <input id="first-name" v-model="dataUserStore.dataUser.code_melli" autocomplete="given-name" type="text" />
       </div>
-
       <div class="w-full">
-        <label for="username">{{ $t('messages.account.username') }} ({{ $t('messages.general.readOnly') }})</label>
-        <input id="username"  placeholder="johndoe" autocomplete="username" type="text" readonly  />
+        <label class="label-input-style">{{$t('messages.account.gender')}}</label>
+        <div style="height: 44px" class="flex items-center gap-3">
+          <CartElementsRadioButton v-for="option in genders" v-model="dataUserStore.dataUser.gender"
+                       :id="option.value"
+                       :value="option.value"
+                       :name="option.name"
+                       :label="$t(option.name)"
+          />
+        </div>
       </div>
+<!--      <div class="w-full">-->
+<!--        <label for="first-name">{{ $t('messages.account.birth_date') }}</label>-->
+<!--        <CartElementsDatePicker v-model="dataUserStore.dataUser.birthday" id="birthdate" name="date" />-->
+<!--      </div>-->
+<!--      <div class="w-full">-->
+<!--        <label for="username">{{ $t('messages.account.username') }} ({{ $t('messages.general.readOnly') }})</label>-->
+<!--        <input id="username"   autocomplete="username" type="text" readonly />-->
+<!--      </div>-->
 
-      <div class="w-full">
-        <label for="email">{{ $t('messages.billing.email') }}</label>
-        <input id="email"  placeholder="johndoe@email.com" autocomplete="email" type="email" />
-      </div>
+<!--      <div class="w-full">-->
+<!--        <label for="email">{{ $t('messages.billing.email') }}</label>-->
+<!--        <input id="email" v-model="dataUserStore.dataUser.email" autocomplete="email" type="email" />-->
+<!--      </div>-->
     </div>
     <div class="bg-white backdrop-blur-sm bg-opacity-75 border-t col-span-full p-4 sticky bottom-0 rounded-b-lg">
       <button
@@ -45,4 +57,8 @@ const loading = ref<boolean>(false);
 const button = ref<{ text: string; color: string }>({ text: t('messages.account.updateDetails'), color: 'bg-primary hover:bg-primary-dark' });
 const dataUserStore= useDataUserStore()
 
+const genders = [
+  {name:'messages.account.male',value:'man'},
+  {name:'messages.account.female',value:'woman'},
+]
 </script>

@@ -37,6 +37,19 @@
       "readOnly": "فقط خواندنی"
     },
     "account": {
+      "welcome": "خوش آمدید",
+      "edit_avatar": "ویرایش عکس",
+      "upload_avatar": "اپلود عکس",
+      "id_no": "شناسه نامه",
+      "passport": "پاسپورت",
+      "email": "ایمیل",
+      "mobile": "موبایل",
+      "birth_date": "تاریخ تولد",
+      "male": "مرد",
+      "female": "زن",
+      "gender": "جنسیت",
+      "title_auth":"احراز هویت",
+      "melli_code": "کد ملی",
       "changePassword": "تغییر رمز عبور",
       "currentPassword": "رمز عبور فعلی",
       "password": "رمز عبور",
@@ -138,6 +151,7 @@
     "billing": {
       "billing": "صورتحساب",
       "billingDetails": "جزئیات صورتحساب",
+      "name": "نام و نام خانوادگی",
       "firstName": "نام",
       "lastName": "نام خانوادگی",
       "address1": "آدرس",

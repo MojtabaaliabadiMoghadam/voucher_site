@@ -21,6 +21,7 @@
     "@vueuse/core": "^12.7.0",
     "axios": "^1.7.7",
     "flowbite": "^2.5.2",
+    "moment-jalaali": "^0.10.4",
     "node-fetch": "^3.3.2",
     "nuxt": "^3.13.2",
     "pinia": "^2.2.4",

@@ -221,8 +221,7 @@ input[type='radio'] {
   border-radius: 50%;
 }
 
-input[type='checkbox']:after,
-input[type='radio']:after {
+input[type='checkbox']:after{
   content: '';
   display: block;
   opacity: 0;
