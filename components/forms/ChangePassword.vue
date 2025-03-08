@@ -7,12 +7,12 @@
 
       <div class="w-full">
         <label for="new-password">{{ $t('messages.account.newPassword') }}</label>
-        <PasswordInput id="new-password" placeholder="••••••••••" type="text" required />
+        <PasswordInput id="new-password" type="text" required  v-model="formData.password"/>
       </div>
 
       <div class="w-full">
         <label for="new-password-confirm">{{ $t('messages.account.confirmNewPassword') }}</label>
-        <PasswordInput id="new-password-confirm" placeholder="••••••••••" type="text" required />
+        <PasswordInput id="new-password-confirm" type="text" required  v-model="formData.password_confirmation"/>
       </div>
 
       <Transition name="scale-y" mode="out-in">
@@ -35,12 +35,40 @@
 <script setup lang="ts">
 import PasswordInput from "~/components/forms/PasswordInput.vue";
 import LoadingIcon from "~/components/generalElements/LoadingIcon.vue";
-
+import DateConverter from "~/helpers/DateConverter";
+interface IFormData {
+  password?:string,
+  password_confirmation?:string
+}
+const formData = ref<IFormData>({
+  password:'',
+  password_confirmation:''
+})
 const { t } = useI18n();
+const {getUrl, fetchData, showSuccessToast, showErrorToast} = useHelpers()
 
 const password = ref<{ new: string; confirm: string }>({ new: '', confirm: '' });
 const loading = ref<boolean>(false);
 const button = ref<{ text: string; color: string }>({ text: t('messages.account.updatePassword'), color: 'bg-primary hover:bg-primary-dark' });
 const errorMessage = ref<string>('');
 
+
+async function updatePassword(){
+  loading.value = true
+  let url = getUrl('web/profile/change-password')
+  const {status,message,data} = await fetchData({
+    url,
+    method:'POST',
+    data:formData.value,
+    authorization:true
+  })
+  if (status == 200){
+    showSuccessToast(message)
+    loading.value = false
+    formData.value = {}
+  }else{
+    showErrorToast(message)
+    loading.value = false
+  }
+}
 </script>

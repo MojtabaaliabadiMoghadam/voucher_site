@@ -13,7 +13,7 @@
     />
     <label
         :for="props.id"
-        class="text-sm font-bold text-gray-900 dark:text-gray-300 cursor-pointer"
+        class="!text-[16px] font-bold text-gray-900 dark:text-gray-300 cursor-pointer"
     >
       {{ props.label }}
     </label>

@@ -4,8 +4,8 @@
         :dir="isRtl ?'rtl':'ltr'"
         v-if="props.label || $slots.extra_label"
         :for="props.name"
-        class="title-3-700 flex text-asa-text-900	ps-4 mb-1 gap-1 truncate"
-        :class="[props.disabled ? 'text-asa-text-500' : 'text-asa-text-800',classLabel,isRtl? '':'max-w-[11.25rem]']"
+        class="title-3-700 flex text-gray-900	ps-4 mb-1 gap-1 truncate"
+        :class="[props.disabled ? 'text-gray-500' : 'text-gray-800',classLabel,isRtl? '':'max-w-[11.25rem]']"
     >
       <slot name="before_label"/>
       {{ props.label ? $t(props.label) : '' }}
@@ -26,7 +26,7 @@
           :autocomplete="props.autocomplete"
           :class="[props.class , errorMessage || props.errorMessageFromBackend.length || showError  ? props.classError :  '' ,
            props.classReadOnly ,props.classDisabled ,props.classFocus ,props.classPlaceholder,]"
-          class="block w-full   py-3 px-3 rounded-lg label-1-400   bg-white text-asa-text-900 border-0 ring-2 ring-inset ring-asa-transparency-40"
+          class="block w-full   py-3 px-3 rounded-lg label-1-400   bg-white text-gray-900 border-0 ring-2 ring-inset ring-asa-transparency-40"
           :placeholder="props.placeholder ?  $t(props.placeholder) : ''"/>
       <div :class="[props.clickable_icon ? 'cursor-pointer' : 'pointer-events-none']" class="absolute inset-y-0 end-0 flex items-center pe-3.5">
         <slot name="icon" />
@@ -44,8 +44,6 @@
 </template>
 
 <script setup lang="ts">
-import {useField} from "vee-validate";
-import * as yup from "yup";
 
 const {isRtl} = useHelpers()
 const emit = defineEmits(['emitBlur', 'change', 'inputChange'])
@@ -90,9 +88,9 @@ const props = withDefaults(defineProps<PropsInterface>(), {
   class: '',
   classReadOnly: 'read-only:bg-asa-transparency-10 read-only:ring-2 read-only:ring-asa-transparency-40 read-only:focus:ring-asa-transparency-40',
   classError: '!bg-asa-red-25 !ring-2 !ring-asa-red-500 !focus:ring-2 !focus:ring-asa-red-500',
-  classDisabled: 'disabled:text-asa-text-500  disabled:bg-asa-transparency-10 disabled:ring-transparent disabled:cursor-not-allowed',
+  classDisabled: 'disabled:text-gray-500  disabled:bg-asa-transparency-10 disabled:ring-transparent disabled:cursor-not-allowed',
   classFocus: 'focus:ring-2 focus:ring-inset focus:ring-asa-brand-60',
-  classPlaceholder: 'placeholder:text-asa-text-500 justify-start',
+  classPlaceholder: 'placeholder:text-gray-500 justify-start',
   id: '',
   required: false,
   rules: '',
@@ -139,17 +137,6 @@ function change(e: Event) {
 
 const model = defineModel()
 
-const validatePassword = yup
-    .string()
-    .required(`${props.label || props.name} is required`);
-const {errorMessage, value, handleBlur, handleChange} = useField(
-    ref(props.name),
-    props.rules == "required" ? validatePassword : props.rules,
-    {
-      initialValue: model.value,
-      label: props.label || props.name,
-    }
-);
 // const setInValidClass = computed(()=>{
 //   if (props.errorMessageFromBackend || errorMessage){
 //

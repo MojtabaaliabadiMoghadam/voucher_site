@@ -12,7 +12,7 @@
       </div>
       <div class="w-full">
         <label class="label-input-style">{{$t('messages.account.gender')}}</label>
-        <div style="height: 44px" class="flex items-center gap-3">
+        <div style="height: 44px" class="flex items-center gap-5">
           <CartElementsRadioButton v-for="option in genders" v-model="dataUserStore.dataUser.gender"
                        :id="option.value"
                        :value="option.value"
@@ -22,25 +22,12 @@
         </div>
       </div>
       <div class="w-full">
-        <label for="first-name">{{ $t('messages.account.birth_date') }}</label>
         <CustomDatePicker
-            :disabled="true"
-            show-default-date
-            v-model="bd"
-            class="max-w-[11.875rem]"
-            :placeholder="$t('availability_rack.select_date')"
+            v-model="dataUserStore.dataUser.birthday"
+            :label="$t('messages.account.birth_date')"
             id="date-picker-pricing-rate"
         />
       </div>
-<!--      <div class="w-full">-->
-<!--        <label for="username">{{ $t('messages.account.username') }} ({{ $t('messages.general.readOnly') }})</label>-->
-<!--        <input id="username"   autocomplete="username" type="text" readonly />-->
-<!--      </div>-->
-
-<!--      <div class="w-full">-->
-<!--        <label for="email">{{ $t('messages.billing.email') }}</label>-->
-<!--        <input id="email" v-model="dataUserStore.dataUser.email" autocomplete="email" type="email" />-->
-<!--      </div>-->
     </div>
     <div class="bg-white backdrop-blur-sm bg-opacity-75 border-t col-span-full p-4 sticky bottom-0 rounded-b-lg">
       <button
@@ -58,9 +45,10 @@
 import LoadingIcon from "~/components/generalElements/LoadingIcon.vue";
 import {useDataUserStore} from "~/stores/userDataStore";
 import CustomDatePicker from "~/components/forms/CustomDatePicker.vue";
+import DateConverter from "~/helpers/DateConverter";
+const {getUrl, fetchData, showSuccessToast, showErrorToast} = useHelpers()
 
 const { t } = useI18n();
-const bd = ref()
 const loading = ref<boolean>(false);
 const button = ref<{ text: string; color: string }>({ text: t('messages.account.updateDetails'), color: 'bg-primary hover:bg-primary-dark' });
 const dataUserStore= useDataUserStore()
@@ -69,4 +57,28 @@ const genders = [
   {name:'messages.account.male',value:'man'},
   {name:'messages.account.female',value:'woman'},
 ]
+
+async function saveChanges(){
+  loading.value = true
+  let url = getUrl('web/profile/change-profile')
+  const {status,message,data} = await fetchData({
+    url,
+    method:'POST',
+    data:{
+      name:dataUserStore.dataUser.name,
+      code_melli:dataUserStore.dataUser.code_melli,
+      gender:dataUserStore.dataUser.gender,
+      birthday:DateConverter.convertDateFormat(dataUserStore.dataUser.birthday, 'yyyy-MM-dd', 'gregorian'),
+    },
+    authorization:true
+  })
+  if (status == 200){
+    showSuccessToast(message)
+    await dataUserStore.getUserData()
+    loading.value = false
+  }else{
+    showErrorToast(message)
+    loading.value = false
+  }
+}
 </script>

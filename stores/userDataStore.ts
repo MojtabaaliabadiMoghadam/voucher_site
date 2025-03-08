@@ -1,5 +1,6 @@
 import {defineStore} from "pinia";
 import {useCookie} from "#app";
+import DateConverter from "~/helpers/DateConverter";
 interface IAvatar {
     collection?:string;
     media?:string;
@@ -23,7 +24,7 @@ interface IUser {
 }
 
 export const useDataUserStore = defineStore("user", () => {
-    const {getUrl, fetchData, showSuccessToast, showErrorToast} = useHelpers()
+    const {getUrl, fetchData, showSuccessToast, showErrorToast,extractDate} = useHelpers()
 
     const dataUser = ref<IUser>({})
 
@@ -37,7 +38,10 @@ export const useDataUserStore = defineStore("user", () => {
             })
 
             if (status == 200) {
-                dataUser.value = data
+                dataUser.value = {
+                    ...data,
+                    birthday:DateConverter.convertDateFormat(extractDate(data?.birthday), 'yyyy/MM/dd', 'jalali')
+                }
             } else {
                 showErrorToast(message)
             }

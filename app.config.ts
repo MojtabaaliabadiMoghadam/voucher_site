@@ -24,4 +24,13 @@ export default defineAppConfig({
     saleBadge: 'percent', // 'percent', 'onSale' or 'hidden'
     socialLoginsDisplay: 'buttons', // 'buttons' or 'icons'
   },
+  head: {
+    script: [
+      { src: '/js/jquery.min.js', defer: true },
+      { src: '/js/persian-date.min.js', defer: true },
+      { src: '/js/persian-datepicker.min.js', defer: true },
+      { src: '/js/jquery.mask.min', defer: true }
+    ],
+    link: [{ rel: 'stylesheet', href: '/css/persian-datepicker.min.css' }]
+  }
 });

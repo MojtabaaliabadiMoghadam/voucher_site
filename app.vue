@@ -1,6 +1,6 @@
 <template>
   <NuxtLoadingIndicator />
-  <div class="flex flex-col min-h-screen" :dir="locale === 'fa-FA' ? 'rtl' : 'ltr'">
+  <div class="flex flex-col min-h-screen">
     <AppHeader />
 
     <Transition name="slide-from-left">
@@ -27,10 +27,10 @@ import AppFooter from "~/components/generalElements/AppFooter.vue";
 const isShowingCart = ref(false)
 const route = useRoute();
 const { isShowingMobileMenu, toggleMobileMenu, addBodyClass, removeBodyClass } = useHelpers();
-const { siteName } = useAppConfig();
-import { useI18n } from 'vue-i18n';
-
 const { locale, t } = useI18n();
+const { siteName } = useAppConfig();
+
+import { useI18n } from 'vue-i18n';
 
 const closeCartAndMenu = () => {
   // toggleCart(false);
@@ -48,6 +48,9 @@ watch(
 
 useHead({
   titleTemplate: `%s - ${siteName}`,
+  htmlAttrs: {
+    dir: computed(() => (locale.value === "fa" ? "rtl" : "ltr")),
+  },
 });
 </script>
 <style lang="postcss">

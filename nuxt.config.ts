@@ -17,7 +17,7 @@ export default defineNuxtConfig({
   plugins: [
     // jQuery plugin
     {src: '@/plugins/jquery.js', mode: 'client'},
-    {src: '@/plugins/vue-toastify.client.ts', mode: 'client'},
+    {src: '@/plugins/vue-toastify.client.ts', mode: 'client'}
   ],
   image: {
     dir: 'public', // مشخص کردن مسیر تصاویر در پوشه `public`
@@ -83,19 +83,14 @@ export default defineNuxtConfig({
   },
   i18n: {
     globalInjection: true,
-    detectBrowserLanguage:false,
+    detectBrowserLanguage: false,
     lazy: true,
     locales: [
-      { code: 'fa-FA', file: 'fa-FA.json', name: 'Persian 🇺🇸' },
-      { code: 'en_US', file: 'en-US.json', name: 'English 🇺🇸' },
-      { code: 'de_DE', file: 'de-DE.json', name: 'Deutsch 🇩🇪' },
-      { code: 'es_ES', file: 'es-ES.json', name: 'Español 🇪🇸' },
-      { code: 'fr_FR', file: 'fr-FR.json', name: 'Français 🇫🇷' },
-      { code: 'it_IT', file: 'it-IT.json', name: 'Italiano 🇮🇹' },
-      { code: 'pt_BR', file: 'pt-BR.json', name: 'Português 🇧🇷' },
+      { code: 'fa', file: 'fa.json', name: 'فارسی' },
+      { code: 'en', file: 'en.json', name: 'English' },
     ],
     langDir: 'locales',
-    defaultLocale: 'fa-FA',
+    defaultLocale: 'fa', // مقدار پیش‌فرض
     strategy: 'no_prefix',
   },
   compatibilityDate: '2024-09-27'

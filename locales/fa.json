@@ -37,10 +37,15 @@
       "readOnly": "فقط خواندنی"
     },
     "account": {
+      "file_change": "ویرایش شناسنامه",
+      "upload_melli_code": "اپلود کد ملی",
+      "accept": "تایید نهایی",
+      "send_otp": "ارسال کد ",
+      "send_file": "ارسال فایل",
       "welcome": "خوش آمدید",
       "edit_avatar": "ویرایش عکس",
       "upload_avatar": "اپلود عکس",
-      "id_no": "شناسه نامه",
+      "id_no": "شناسنامه",
       "passport": "پاسپورت",
       "email": "ایمیل",
       "mobile": "موبایل",

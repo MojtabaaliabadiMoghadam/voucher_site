@@ -1,8 +1,7 @@
 import type {AxiosResponse} from 'axios';
 import axios from 'axios';
-import {useCookie} from "#app";
+import {useCookie, useNuxtApp} from "#app";
 // axios.defaults.withCredentials = true;
-
 
 axios.defaults.withCredentials = true;  // اصلاح با withCredentials
 
@@ -52,7 +51,7 @@ enum HttpMethods {
 
 // A collection of helper functions.
 export function useHelpers() {
-    const { $toast } = useNuxtApp()
+    const { $toast ,$i18n} = useNuxtApp()
     const runtimeConfig = useRuntimeConfig();
     const backEndUrl: string | null = runtimeConfig.public?.BACK_END_URL
     const isDev: boolean = process.env.NODE_ENV === 'development';
@@ -484,8 +483,13 @@ export function useHelpers() {
         }
         return '';
     };
+
     const isRtl = computed(() => $i18n.locale.value === 'fa' || $i18n.locale.value === 'ar');
 
+
+    // function extractDate(datetime: string): string {
+    //     return datetime.split(' ')[0]; // فقط بخش تاریخ را جدا می‌کند
+    // }
     return {
         backEndUrl,
         isDev,

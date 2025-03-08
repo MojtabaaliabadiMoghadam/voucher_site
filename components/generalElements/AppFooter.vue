@@ -1,16 +1,10 @@
-<script setup lang="ts">
-import Logo from "~/components/generalElements/Logo.vue";
-import WebsiteShortDescription from "~/components/shopElements/WebsiteShortDescription.vue";
-
-</script>
-
 <template>
   <footer class="bg-white order-last">
     <div class="container flex flex-wrap justify-between gap-12 my-24 md:gap-24">
       <div class="mr-auto">
         <Logo />
         <WebsiteShortDescription />
-<!--        <LangSwitcher class="mt-8" />-->
+        <LangSwitcher class="mt-8" />
       </div>
       <div class="w-3/7 lg:w-auto">
         <div class="mb-1 font-semibold">Information</div>
@@ -60,6 +54,11 @@ import WebsiteShortDescription from "~/components/shopElements/WebsiteShortDescr
     </div>
   </footer>
 </template>
+<script setup lang="ts">
+import Logo from "~/components/generalElements/Logo.vue";
+import WebsiteShortDescription from "~/components/shopElements/WebsiteShortDescription.vue";
+
+</script>
 
 <style scoped lang="postcss">
 a {
