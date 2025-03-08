@@ -21,10 +21,17 @@
           />
         </div>
       </div>
-<!--      <div class="w-full">-->
-<!--        <label for="first-name">{{ $t('messages.account.birth_date') }}</label>-->
-<!--        <CartElementsDatePicker v-model="dataUserStore.dataUser.birthday" id="birthdate" name="date" />-->
-<!--      </div>-->
+      <div class="w-full">
+        <label for="first-name">{{ $t('messages.account.birth_date') }}</label>
+        <CustomDatePicker
+            :disabled="true"
+            show-default-date
+            v-model="bd"
+            class="max-w-[11.875rem]"
+            :placeholder="$t('availability_rack.select_date')"
+            id="date-picker-pricing-rate"
+        />
+      </div>
 <!--      <div class="w-full">-->
 <!--        <label for="username">{{ $t('messages.account.username') }} ({{ $t('messages.general.readOnly') }})</label>-->
 <!--        <input id="username"   autocomplete="username" type="text" readonly />-->
@@ -50,9 +57,10 @@
 <script setup lang="ts">
 import LoadingIcon from "~/components/generalElements/LoadingIcon.vue";
 import {useDataUserStore} from "~/stores/userDataStore";
+import CustomDatePicker from "~/components/forms/CustomDatePicker.vue";
 
 const { t } = useI18n();
-
+const bd = ref()
 const loading = ref<boolean>(false);
 const button = ref<{ text: string; color: string }>({ text: t('messages.account.updateDetails'), color: 'bg-primary hover:bg-primary-dark' });
 const dataUserStore= useDataUserStore()

@@ -144,6 +144,21 @@ export function useHelpers() {
 
         return `${year}-${month}-${day}`;
     }
+    function getDateToday() {
+        // Get the current date and time
+        const date = new Date();
+
+        // Extract components and pad with leading zeros if necessary
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based, so add 1
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        const seconds = String(date.getSeconds()).padStart(2, '0');
+
+        // Format the date and time as YYYY-MM-DDTHH:mm:ss
+        return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+    }
     async function fetchData(
         {
             url,
@@ -469,6 +484,7 @@ export function useHelpers() {
         }
         return '';
     };
+    const isRtl = computed(() => $i18n.locale.value === 'fa' || $i18n.locale.value === 'ar');
 
     return {
         backEndUrl,
@@ -487,8 +503,8 @@ export function useHelpers() {
         extractDate,
         getJalaliOptions,
         isObjectEmpty,
-
-
+        getDateToday,
+        isRtl,
         isShowingMobileMenu,
         productsPerPage,
         isQueryEmpty,

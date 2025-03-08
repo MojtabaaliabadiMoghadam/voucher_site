@@ -21,6 +21,8 @@
     "@vueuse/core": "^12.7.0",
     "axios": "^1.7.7",
     "flowbite": "^2.5.2",
+    "jalaali-js": "^1.2.7",
+    "jquery": "^3.7.1",
     "moment-jalaali": "^0.10.4",
     "node-fetch": "^3.3.2",
     "nuxt": "^3.13.2",
@@ -32,7 +34,12 @@
     "tailwindcss-rtl": "^0.9.0",
     "vue": "^3.5.11",
     "vue-router": "^4.4.5",
-    "vue3-toastify": "^0.2.3"
+    "vue3-toastify": "^0.2.3",
+    "@vee-validate/nuxt": "^4.13.2",
+    "@vee-validate/rules": "^4.13.2",
+    "@vee-validate/yup": "^4.13.2",
+    "vee-validate": "^4.13.2",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@nuxt/icon": "^1.10.3",

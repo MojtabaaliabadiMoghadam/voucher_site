@@ -14,6 +14,11 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     '@nuxt/image'
   ],
+  plugins: [
+    // jQuery plugin
+    {src: '@/plugins/jquery.js', mode: 'client'},
+    {src: '@/plugins/vue-toastify.client.ts', mode: 'client'},
+  ],
   image: {
     dir: 'public', // مشخص کردن مسیر تصاویر در پوشه `public`
   },
@@ -51,12 +56,15 @@ export default defineNuxtConfig({
         // <meta name="viewport" content="width=device-width, initial-scale=1">
         {name: 'viewport', content: 'width=device-width, initial-scale=1'}
       ],
-      script: [],
+      script: [
+        { src: '/js/jquery.min.js' },
+        { src: '/js/persian-date.min.js' },
+        { src: '/js/persian-datepicker.min.js' },
+        { src: '/js/jquery.mask.min.js' }
+      ],
       link: [
-        { 
-          rel: 'stylesheet', 
-          href: 'https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;700&display=swap' 
-        }
+        {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;700&display=swap'},
+        { rel: 'stylesheet', href: '/css/persian-datepicker.min.css' }
       ],
       style: [],
       noscript: []
@@ -74,6 +82,9 @@ export default defineNuxtConfig({
     },
   },
   i18n: {
+    globalInjection: true,
+    detectBrowserLanguage:false,
+    lazy: true,
     locales: [
       { code: 'fa-FA', file: 'fa-FA.json', name: 'Persian 🇺🇸' },
       { code: 'en_US', file: 'en-US.json', name: 'English 🇺🇸' },
