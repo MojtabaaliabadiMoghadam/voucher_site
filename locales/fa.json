@@ -1,4 +1,12 @@
 {
+  "cancel_send": "عدم ارسال",
+  "status": "وضعیت",
+  "reason_reject": "دلیل رد شدن",
+  "date": "تاریخ",
+  "pending": "درحال بررسی",
+  "cancel": "لغو شده",
+  "reject": "رد شده",
+  "accept": "تایید شده",
   "messages": {
     "general": {
       "viewAll": "مشاهده همه",
@@ -37,16 +45,16 @@
       "readOnly": "فقط خواندنی"
     },
     "account": {
-      "file_change": "ویرایش شناسنامه",
-      "upload_melli_code": "اپلود کد ملی",
-      "accept": "تایید نهایی",
+      "file_change": "بارگزاری مجدد",
+      "upload_melli_code": "بارگزاری فایل",
+      "confirm": "تایید نهایی",
       "send_otp": "ارسال کد ",
       "send_file": "ارسال فایل",
       "welcome": "خوش آمدید",
       "edit_avatar": "ویرایش عکس",
       "upload_avatar": "اپلود عکس",
       "id_no": "شناسنامه",
-      "passport": "پاسپورت",
+      "passport": "گذر نامه",
       "email": "ایمیل",
       "mobile": "موبایل",
       "birth_date": "تاریخ تولد",

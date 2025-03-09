@@ -55,7 +55,7 @@ export function useHelpers() {
     const runtimeConfig = useRuntimeConfig();
     const backEndUrl: string | null = runtimeConfig.public?.BACK_END_URL
     const isDev: boolean = process.env.NODE_ENV === 'development';
-
+    const router = useRouter()
 
     function isFilled(value: any): boolean {
         return value !== undefined && value !== null && value !== '';
@@ -158,6 +158,13 @@ export function useHelpers() {
         // Format the date and time as YYYY-MM-DDTHH:mm:ss
         return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
     }
+
+    function outUser(){
+        const token = useCookie<string | null>("auth_token");
+        token.value = null;
+        navigateTo('/login',{external:true})
+    }
+
     async function fetchData(
         {
             url,
@@ -207,6 +214,9 @@ export function useHelpers() {
                 message: data.message,
             };
         } catch (error: any) {
+            if (error.response.data.error_code === 'AuthenticationException') {
+                outUser()
+            }
             if (error.response) {
                 return {
                     status: error.response.status,
@@ -491,6 +501,7 @@ export function useHelpers() {
     //     return datetime.split(' ')[0]; // فقط بخش تاریخ را جدا می‌کند
     // }
     return {
+        outUser,
         backEndUrl,
         isDev,
         isFilled,

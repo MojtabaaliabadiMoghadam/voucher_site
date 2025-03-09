@@ -3,9 +3,23 @@
     <form class="bg-white rounded-lg shadow" @submit.prevent="saveChanges">
       <div class="grid gap-6 p-8 md:grid-cols-2">
         <h3 class="text-xl font-semibold col-span-full">{{ $t('messages.account.title_auth') }}</h3>
-        <BoxAuthentication :is_valid="true" type="otp" id="mobile" :label="$t('messages.account.mobile')" v-model="dataUserStore.dataUser.mobile" />
-        <BoxAuthentication :is_valid="false" type="otp" id="email" :label="$t('messages.account.email')" v-model="dataUserStore.dataUser.email" />
-        <BoxAuthentication :is_valid="false" type="melli_code" id="email" :label="$t('messages.account.id_no')" v-model="dataUserStore.dataUser.code_melli" />
+        <template v-for="(value, key) in listOFAuth">
+          <BoxAuthentication
+              v-if="key === 'email' || key === 'mobile'"
+              :is_valid="value?.is_verified"
+              :key_custom="key"
+              :label="$t(getTitle(key))"
+              v-model="dataUserStore.dataUser.mobile"
+          />
+          <BoxAuthwithFile
+              v-else
+              :type="key"
+              :label="$t(getTitle(key))"
+              v-model="dataUserStore.dataUser[key]"
+              :result="value?.result"
+              @fetch-again="getListAuth"
+          />
+        </template>
       </div>
       <div class="bg-white backdrop-blur-sm bg-opacity-75 border-t col-span-full p-4 sticky bottom-0 rounded-b-lg">
         <button
@@ -24,32 +38,62 @@
 import LoadingIcon from "~/components/generalElements/LoadingIcon.vue";
 import {useDataUserStore} from "~/stores/userDataStore";
 import BoxAuthentication from "~/components/Profile/BoxAuthentication.vue";
-
+import DateConverter from "~/helpers/DateConverter";
+import {as} from "@faker-js/faker/dist/airline-BcEu2nRk";
+import {awaitExpression} from "@babel/types";
+import BoxAuthwithFile from "~/components/Profile/BoxAuthwithFile.vue";
+const {getUrl, fetchData, showSuccessToast, showErrorToast,objectOrArrayIsNotEmpty} = useHelpers()
 const {t} = useI18n();
 const loading = ref<boolean>(false);
 const button = ref<{ text: string; color: string }>({
   text: t('messages.account.updateDetails'),
   color: 'bg-primary hover:bg-primary-dark'
 });
+const getTitle = (type: string): string => {
+  const titles: Record<string, string> = {
+    mobile: "messages.account.mobile",
+    email: "messages.account.email",
+    passport: "messages.account.passport",
+    id_card: "messages.account.id_no",
+  };
+
+  return titles[type] || "نامشخص";
+};
+
+const prepareKey = (type: string): string => {
+  const titles: Record<string, string> = {
+    mobile: "mobile",
+    email: "email",
+    passport: "karte_melli",
+    id_card: "id_card",
+  };
+
+  return titles[type] ;
+};
+
 const dataUserStore = useDataUserStore()
+const listOFAuth = ref({})
+async function getListAuth(){
+  let url = getUrl('web/authentication')
+  try {
+    const {status,message,data} = await fetchData({
+      url,
+      method:'GET',
+      authorization:true
+    })
+    if (status == 200){
+      listOFAuth.value = data
+    }else{
+      showErrorToast(message)
+    }
+  }catch (error){
 
-const genders = [
-  {name: 'messages.account.male', value: 'man'},
-  {name: 'messages.account.female', value: 'woman'},
-]
+  }finally {
+  }
+}
+onMounted(async ()=>{
+  await getListAuth()
+})
 </script>
-<style>
-.account-form input[type='text'],
-.account-form input[type='email'],
-.account-form input[type='tel'],
-.account-form input[type='password'],
-.account-form textarea,
-.account-form .StripeElement,
-.account-form select {
-  @apply bg-white border rounded-md outline-none w-full py-2 px-4 block md:bg-gray-50;
-}
-
-.account-form label {
-  @apply text-xs mb-1 text-gray-600 inline-block uppercase;
-}
+<style scoped>
 </style>

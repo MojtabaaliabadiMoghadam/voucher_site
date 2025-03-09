@@ -2,16 +2,10 @@
   <form  class="bg-white rounded-lg shadow" @submit.prevent="saveChanges">
     <div class="grid gap-6 p-8 md:grid-cols-2">
       <h3 class="text-xl font-semibold col-span-full">{{ $t('messages.account.personalInfo') }}</h3>
+      <BaseInput :label="$t('messages.billing.name')" v-model="dataUserStore.dataUser.name"/>
+      <BaseInput :label="$t('messages.account.melli_code')" v-model="dataUserStore.dataUser.code_melli"/>
       <div class="w-full">
-        <label for="first-name">{{ $t('messages.billing.name') }}</label>
-        <input id="first-name" v-model="dataUserStore.dataUser.name" autocomplete="given-name" type="text" />
-      </div>
-      <div class="w-full">
-        <label for="first-name">{{ $t('messages.account.melli_code') }}</label>
-        <input id="first-name" v-model="dataUserStore.dataUser.code_melli" autocomplete="given-name" type="text" />
-      </div>
-      <div class="w-full">
-        <label class="label-input-style">{{$t('messages.account.gender')}}</label>
+        <label class="text-xs mb-1 text-gray-600 inline-block uppercase">{{$t('messages.account.gender')}}</label>
         <div style="height: 44px" class="flex items-center gap-5">
           <CartElementsRadioButton v-for="option in genders" v-model="dataUserStore.dataUser.gender"
                        :id="option.value"
@@ -46,6 +40,7 @@ import LoadingIcon from "~/components/generalElements/LoadingIcon.vue";
 import {useDataUserStore} from "~/stores/userDataStore";
 import CustomDatePicker from "~/components/forms/CustomDatePicker.vue";
 import DateConverter from "~/helpers/DateConverter";
+import BaseInput from "~/components/forms/BaseInput.vue";
 const {getUrl, fetchData, showSuccessToast, showErrorToast} = useHelpers()
 
 const { t } = useI18n();

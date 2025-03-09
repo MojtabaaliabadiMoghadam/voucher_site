@@ -1,5 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import Aura from '@primevue/themes/aura';
+import Aura from '@primeuix/themes/aura';
 export default defineNuxtConfig({
   components: true,
   ssr: true,
@@ -23,19 +23,15 @@ export default defineNuxtConfig({
     dir: 'public', // مشخص کردن مسیر تصاویر در پوشه `public`
   },
   primevue: {
-    locale: {
-      rtl: true // فعال‌سازی حالت راست‌به‌چپ
-    },
     options: {
       theme: {
         preset: Aura,
         options: {
           darkModeSelector: 'light',
-        },
+        }
       }
     }
   },
-
   runtimeConfig: {
     public: {
       BACK_END_URL: process.env.BACK_END_URL,
