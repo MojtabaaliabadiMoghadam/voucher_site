@@ -3,6 +3,8 @@ import { faker } from "@faker-js/faker";
 import { useRoute, useRouter } from "vue-router";
 
 export const useDataGlobal = defineStore("data", () => {
+    const {getUrl, fetchData, showSuccessToast, showErrorToast,extractDate} = useHelpers()
+
     const route = useRoute();
     const router = useRouter();
 
@@ -17,21 +19,21 @@ export const useDataGlobal = defineStore("data", () => {
 
 
     function generateProducts(count: number) {
-        if (!lock.value) return null;
-        products.value = Array.from({ length: count }, () => ({
-            name: faker.commerce.productName(),
-            databaseId: faker.number.int({ min: 1000, max: 9999 }),
-            price: parseFloat(faker.commerce.price({ min: 0, max: 1000 })),
-            slug: faker.lorem.slug(),
-            rating: faker.number.float({ min: 1, max: 5, precision: 0.1 }),
-            discount: faker.number.int({ min: 0, max: 50 }),
-            category: faker.helpers.arrayElement(["لباس", "کفش", "لوازم الکترونیک", "کتاب"]),
-            stockQuantity: faker.number.int({ min: 0, max: 100 }),
-            stockStatus: faker.helpers.arrayElement(["IN_STOCK", "OUT_OF_STOCK"]),
-            src: faker.image.url(),
-            date: faker.date.past(),
-        }));
-        lock.value = false;
+        // if (!lock.value) return null;
+        // products.value = Array.from({ length: count }, () => ({
+        //     name: faker.commerce.productName(),
+        //     databaseId: faker.number.int({ min: 1000, max: 9999 }),
+        //     price: parseFloat(faker.commerce.price({ min: 0, max: 1000 })),
+        //     slug: faker.lorem.slug(),
+        //     rating: faker.number.float({ min: 1, max: 5, precision: 0.1 }),
+        //     discount: faker.number.int({ min: 0, max: 50 }),
+        //     category: faker.helpers.arrayElement(["لباس", "کفش", "لوازم الکترونیک", "کتاب"]),
+        //     stockQuantity: faker.number.int({ min: 0, max: 100 }),
+        //     stockStatus: faker.helpers.arrayElement(["IN_STOCK", "OUT_OF_STOCK"]),
+        //     src: faker.image.url(),
+        //     date: faker.date.past(),
+        // }));
+        // lock.value = false;
     }
 
     // list of category should be delete after add api
@@ -125,8 +127,29 @@ export const useDataGlobal = defineStore("data", () => {
         });
     }
 
+    async function GetProducts(){
+        try {
+            let url = getUrl('/web/product/voucher')
+            const {status, data, message} = await fetchData({
+                method: 'GET',
+                url,
+                parameters:{
+                    with:['translations','category.translations','prices']
+                }
+            })
+
+            if (status == 200) {
+                products.value = data
+            } else {
+                showErrorToast(message)
+            }
+        } catch (error) {
+            showErrorToast(error)
+        }
+    }
     return {
         products,
+        GetProducts,
         generateProducts,
         priceFilter,
         categoryFilter,

@@ -57,13 +57,14 @@
         <h2 class="text-lg font-semibold md:text-2xl">{{ $t('messages.shop.popularProducts') }}</h2>
         <NuxtLink class="text-primary" to="/products">{{ $t('messages.general.viewAll') }}</NuxtLink>
       </div>
-      <ShopElementsProductRow :products="dataStore.categories" class="grid-cols-2 md:grid-cols-4 lg:grid-cols-5 mt-8"/>
+      <ShopElementsProductRow :products="dataStore.products" class="grid-cols-2 md:grid-cols-4 lg:grid-cols-5 mt-8"/>
     </section>
   </main>
 </template>
 <script lang="ts" setup>
 import HeroBanner from "~/components/generalElements/HeroBanner.vue";
 import {useDataGlobal} from "~/stores/globalStore";
+
 const dataStore = useDataGlobal()
 const {siteName, description, shortDescription, siteImage} = useAppConfig();
 
@@ -77,6 +78,9 @@ useSeoMeta({
   ogImage: siteImage,
   twitterCard: `summary_large_image`,
 });
+onMounted(async ()=>{
+  await dataStore.GetProducts()
+})
 </script>
 <style scoped>
 .brand img {

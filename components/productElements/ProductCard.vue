@@ -1,7 +1,7 @@
 <template>
   <div class="relative group">
     <NuxtLink v-if="node.slug" :to="`/product/${decodeURIComponent(node.slug)}`" :title="node.name">
-      <SaleBadge :node class="absolute top-2 right-2" />
+      <SaleBadge v-if="node?.status" :node class="absolute top-2 right-2" />
       <img
           :width="imgWidth"
           :height="imgHeight"
@@ -11,14 +11,12 @@
           :loading="index <= 3 ? 'eager' : 'lazy'"
           :sizes="`sm:${imgWidth / 2}px md:${imgWidth}px`"
           class="rounded-lg object-top object-cover w-full aspect-9/8 md:h-[280px] h-[150px]"
-          placeholder
-          placeholder-class="blur-xl"
       />
     </NuxtLink>
     <div class="p-2">
-      <StarRating v-if="storeSettings.showReviews" :rating="3" :count="3" />
+<!--      <StarRating v-if="storeSettings.showReviews" :rating="3" :count="3" />-->
       <NuxtLink v-if="node.slug" :to="`/product/${decodeURIComponent(node.slug)}`" :title="node.name">
-        <h2 class="mb-2 font-light leading-tight group-hover:text-primary">{{ node.name }}</h2>
+        <h2 class="mb-2 font-light leading-tight group-hover:text-primary">{{ node.translations[locale].title }}</h2>
       </NuxtLink>
       <ProductPrice class="text-sm" :regular-price="node.price" />
     </div>
@@ -26,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-
+const {locale} = useI18n()
 import SaleBadge from "~/components/productElements/SaleBadge.vue";
 import StarRating from "~/components/productElements/StarRating.vue";
 import ProductPrice from "~/components/productElements/ProductPrice.vue";
