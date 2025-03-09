@@ -54,11 +54,11 @@
               <span class="mdi mdi-24px mdi-cash-clock" />
               {{ $t('تراکنش های بانکی') }}
             </NuxtLink>
-            <NuxtLink to="/my-account?tab=wishlist" class="flex items-center gap-4 p-2 px-4"
-                      :class="{ active: activeTab == 'wishlist' }">
-              <span class="mdi mdi-24px mdi-heart-outline" />
-              علاقه مندی
-            </NuxtLink>
+<!--            <NuxtLink to="/my-account?tab=wishlist" class="flex items-center gap-4 p-2 px-4"-->
+<!--                      :class="{ active: activeTab == 'wishlist' }">-->
+<!--              <span class="mdi mdi-24px mdi-heart-outline" />-->
+<!--              علاقه مندی-->
+<!--            </NuxtLink>-->
           </nav>
           <div class="hidden lg:block">
             <hr class="my-8"/>
@@ -71,13 +71,12 @@
             </button>
           </div>
         </div>
-
         <main class="flex-1 w-full lg:my-8 rounded-lg max-w-screen-lg lg:sticky top-24">
           <AccountMyDetails v-if="activeTab === 'my-details'" />
           <Authentication v-if="activeTab === 'authentication'" />
           <CustomOrderList v-else-if="activeTab === 'orders'"/>
           <CustomOrderList v-else-if="activeTab === 'bank-transaction'"/>
-          <WishList v-else-if="activeTab === 'wishlist'"/>
+<!--          <WishList v-else-if="activeTab === 'wishlist'"/>-->
         </main>
       </div>
     </template>
