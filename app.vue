@@ -3,9 +3,9 @@
   <div class="flex flex-col min-h-screen">
     <AppHeader />
 
-    <Transition name="slide-from-left">
-      <LazyShopElementsCart v-if="isShowingCart" />
-    </Transition>
+<!--    <Transition name="slide-from-left">-->
+<!--      <LazyShopElementsCart v-if="dataGlobal.isShowingCart" />-->
+<!--    </Transition>-->
 
     <Transition name="slide-from-right">
       <LazyGeneralElementsMobileMenu v-if="isShowingMobileMenu" />
@@ -14,7 +14,7 @@
     <NuxtPage />
 
     <Transition name="fade">
-      <div v-if="isShowingCart || isShowingMobileMenu" class="bg-black opacity-25 inset-0 z-40 fixed" @click="closeCartAndMenu" />
+      <div v-if="isShowingMobileMenu" class="bg-black opacity-25 inset-0 z-40 fixed" @click="closeCartAndMenu" />
     </Transition>
 
     <AppFooter />
@@ -29,16 +29,17 @@ const route = useRoute();
 const { isShowingMobileMenu, toggleMobileMenu, addBodyClass, removeBodyClass } = useHelpers();
 const { locale, t } = useI18n();
 const { siteName } = useAppConfig();
-
 import { useI18n } from 'vue-i18n';
+import {useDataGlobal} from "~/stores/globalStore";
+const dataGlobal = useDataGlobal()
 
 const closeCartAndMenu = () => {
   // toggleCart(false);
   // toggleMobileMenu(false);
 };
 
-watch([isShowingCart, isShowingMobileMenu], () => {
-  isShowingCart.value || isShowingMobileMenu.value ? addBodyClass('overflow-hidden') : removeBodyClass('overflow-hidden');
+watch([isShowingMobileMenu], () => {
+  isShowingMobileMenu.value ? addBodyClass('overflow-hidden') : removeBodyClass('overflow-hidden');
 });
 
 watch(

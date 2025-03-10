@@ -1,43 +1,121 @@
 <template>
-  <div class="fixed top-0 bottom-0 left-0 z-50 flex flex-col w-11/12 max-w-lg overflow-x-hidden bg-white shadow-lg">
-    <Icon name="ion:close-outline" class="absolute p-1 rounded-lg shadow-lg top-6 left-6 md:left-8 cursor-pointer" size="34" />
-    <EmptyCart v-if="cart && !cart.isEmpty" class="rounded-lg shadow-lg p-1.5 hover:bg-red-400 hover:text-white" />
+  <TransitionRoot as="template" :show="open">
+    <Dialog class="relative z-50" @close="open = false">
+      <TransitionChild as="template" enter="ease-in-out duration-500" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in-out duration-500" leave-from="opacity-100" leave-to="opacity-0">
+        <div class="fixed inset-0 bg-gray-500/75 transition-opacity" />
+      </TransitionChild>
 
-    <div class="mt-8 text-center">
-      {{ $t('messages.shop.cart') }}
-      <span v-if="cart?.contents?.productCount"> ({{ cart?.contents?.productCount }}) </span>
-    </div>
+      <div class="fixed inset-0 overflow-hidden">
+        <div class="absolute inset-0 overflow-hidden">
+          <div class="pointer-events-none fixed inset-y-0 rtl:left-0 ltr:right-0 flex max-w-full ps-10">
+            <TransitionChild as="template" enter="transform transition ease-in-out duration-500 sm:duration-700"
+                             :enter-from="locale ==='fa' ? '-translate-x-full' : 'translate-x-full'" enter-to="translate-x-0"
+                             leave="transform transition ease-in-out duration-500 sm:duration-700"
+                             leave-from="translate-x-0" :leave-to="locale ==='fa' ? '-translate-x-full' : 'translate-x-full'">
+              <DialogPanel class="pointer-events-auto w-screen max-w-md">
+                <div class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
+                  <div class="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
+                    <div class="flex items-start justify-between">
+                      <DialogTitle class="text-lg font-medium text-gray-900">Shopping cart</DialogTitle>
+                      <div class="ms-3 flex h-7 items-center">
+                        <button type="button" class="relative -m-2 p-2 text-gray-400 hover:text-gray-500" @click="open = false">
+                          <span class="absolute -inset-0.5" />
+                          <span class="sr-only">Close panel</span>
+                          <XMarkIcon class="size-6" aria-hidden="true" />
+                        </button>
+                      </div>
+                    </div>
 
-    <ClientOnly>
-      <template v-if="cart && !cart.isEmpty">
-        <ul class="flex flex-col flex-1 gap-4 p-6 overflow-y-scroll md:p-8">
-          <CartCard v-for="item in cart.contents?.nodes" :key="item.key" :item />
-        </ul>
-        <div class="px-8 mb-8">
-          <NuxtLink
-            class="block p-3 text-lg text-center text-white bg-gray-800 rounded-lg shadow-md justify-evenly hover:bg-gray-900"
-            to="/checkout">
-            <span class="mx-2">{{ $t('messages.shop.checkout') }}</span>
-            <span v-html="cart.total" />
-          </NuxtLink>
+                    <div class="mt-8">
+                      <div class="flow-root">
+                        <ul role="list" class="-my-6 divide-y divide-gray-200">
+                          <li v-for="product in products" :key="product.id" class="flex py-6">
+                            <div class="size-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
+                              <img :src="product.imageSrc" :alt="product.imageAlt" class="size-full object-cover" />
+                            </div>
+
+                            <div class="ms-4 flex flex-1 flex-col">
+                              <div>
+                                <div class="flex justify-between text-base font-medium text-gray-900">
+                                  <h3>
+                                    <a :href="product.href">{{ product.name }}</a>
+                                  </h3>
+                                  <p class="ms-4">{{ product.price }}</p>
+                                </div>
+                                <p class="mt-1 text-sm text-gray-500">{{ product.color }}</p>
+                              </div>
+                              <div class="flex flex-1 items-end justify-between text-sm">
+                                <p class="text-gray-500">Qty {{ product.quantity }}</p>
+
+                                <div class="flex">
+                                  <button type="button" class="font-medium text-indigo-600 hover:text-indigo-500">Remove</button>
+                                </div>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="border-t border-gray-200 px-4 py-6 sm:px-6">
+                    <div class="flex justify-between text-base font-medium text-gray-900">
+                      <p>Subtotal</p>
+                      <p>$262.00</p>
+                    </div>
+                    <p class="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
+                    <div class="mt-6">
+                      <a href="#" class="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-xs hover:bg-indigo-700">Checkout</a>
+                    </div>
+                    <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
+                      <p>
+                        or{{ ' ' }}
+                        <button type="button" class="font-medium text-indigo-600 hover:text-indigo-500" @click="open = false">
+                          Continue Shopping
+                          <span aria-hidden="true"> &rarr;</span>
+                        </button>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </DialogPanel>
+            </TransitionChild>
+          </div>
         </div>
-      </template>
-      <!-- Empty Cart Message -->
-      <EmptyCartMessage v-else-if="cart && cart.isEmpty" />
-      <!-- Cart Loading -->
-      <div v-else class="flex flex-col items-center justify-center flex-1 mb-20">
-        <LoadingIcon />
       </div>
-    </ClientOnly>
-    <!-- Cart Loading Overlay -->
-    <div v-if="isUpdatingCart" class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-25">
-      <LoadingIcon />
-    </div>
-  </div>
+    </Dialog>
+  </TransitionRoot>
 </template>
-<script setup lang="ts">
-import EmptyCart from "~/components/cartElements/EmptyCart.vue";
-import EmptyCartMessage from "~/components/shopElements/EmptyCartMessage.vue";
-import LoadingIcon from "~/components/generalElements/LoadingIcon.vue";
 
+<script setup>
+import { ref } from 'vue'
+import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
+import { XMarkIcon } from '@heroicons/vue/24/outline'
+const {locale} = useI18n()
+const products = [
+  {
+    id: 1,
+    name: 'Throwback Hip Bag',
+    href: '#',
+    color: 'Salmon',
+    price: '$90.00',
+    quantity: 1,
+    imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/shopping-cart-page-04-product-01.jpg',
+    imageAlt: 'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
+  },
+  {
+    id: 2,
+    name: 'Medium Stuff Satchel',
+    href: '#',
+    color: 'Blue',
+    price: '$32.00',
+    quantity: 1,
+    imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
+    imageAlt:
+        'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
+  },
+  // More products...
+]
+
+const open = ref(true)
 </script>

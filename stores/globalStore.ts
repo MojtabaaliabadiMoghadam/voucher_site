@@ -4,7 +4,7 @@ import { useRoute, useRouter } from "vue-router";
 
 export const useDataGlobal = defineStore("data", () => {
     const {getUrl, fetchData, showSuccessToast, showErrorToast,extractDate} = useHelpers()
-
+    const isShowingCart = ref<boolean>(true)
     const route = useRoute();
     const router = useRouter();
 
@@ -16,9 +16,9 @@ export const useDataGlobal = defineStore("data", () => {
     const priceFilter = ref({ min: 0, max: 1000 });
     const categoryFilter = ref<string | null>(null);
     const orderby = ref<string>("date");
-    const order = ref<"ASC" | "DESC">("DESC");
-
-
+    const orders = ref([])
+    const order = ref()
+    const orderProduct = ref([])
     function generateProducts(count: number) {
         // if (!lock.value) return null;
         // products.value = Array.from({ length: count }, () => ({
@@ -147,6 +147,47 @@ export const useDataGlobal = defineStore("data", () => {
             }
         } catch (error) {
             showErrorToast(error)
+        }finally {
+
+        }
+    }
+    async function GetOrders(){
+        try {
+            let url = getUrl('/web/order')
+            const {status, data, message} = await fetchData({
+                method: 'GET',
+                url,
+                parameters:{
+                    with:['orderItems.product.translations']
+                },
+                authorization:true
+            })
+
+            if (status == 200) {
+                orders.value = data
+            } else {
+                showErrorToast(message)
+            }
+        } catch (error) {
+            showErrorToast(error)
+        }
+    }
+    async function GetOrder(id:number){
+        try {
+            let url = getUrl(`/web/order/${id}`)
+            const {status, data, message} = await fetchData({
+                method: 'GET',
+                url,
+                authorization:true
+            })
+
+            if (status == 200) {
+                orderProduct.value = data
+            } else {
+                showErrorToast(message)
+            }
+        } catch (error) {
+            showErrorToast(error)
         }
     }
     async function CreateOrder(){
@@ -168,6 +209,7 @@ export const useDataGlobal = defineStore("data", () => {
             })
 
             if (status == 200) {
+                navigateTo(`/orders/${data?.id}`)
                 showSuccessToast(message)
             } else {
                 showErrorToast(message)
@@ -176,6 +218,7 @@ export const useDataGlobal = defineStore("data", () => {
             showErrorToast(error)
         }
     }
+
     return {
         CreateOrder,
         quantity,
@@ -193,7 +236,12 @@ export const useDataGlobal = defineStore("data", () => {
         setPriceFilter,
         setCategoryFilter,
         categories,
-        resetFilters
+        resetFilters,
+        isShowingCart,
+        GetOrders,
+        orders,
+        GetOrder,
+        orderProduct
     };
 });
 

@@ -184,9 +184,9 @@ const onKeydown = (index, event) => {
 };
 watch(loginStore.otp, async () => {
   loginStore.finalOtp = loginStore.otp.join('');
-  if (loginStore.finalOtp.length === 5) {
-    await loginStore.verifyOTP();
-  }
+  // if (loginStore.finalOtp.length === 5) {
+  //   await loginStore.verifyOTP();
+  // }
 }, {deep: true});
 
 watch(() => loginStore.loginStatus, (newVal) => {

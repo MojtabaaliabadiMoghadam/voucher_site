@@ -1,7 +1,6 @@
 <template>
-  <div class="relative cursor-pointer inline-flex" title="Cart">
+  <div @click="PoshToPageCarts" class="relative cursor-pointer inline-flex" title="Cart">
     <span class="mr-1 mdi mdi-cart-outline mdi-24px md:mr-0" />
-
     <ClientOnly>
       <Transition name="popIn" mode="out-in">
         <span
@@ -14,6 +13,10 @@
   </div>
 </template>
 <script setup>
+const router = useRouter()
+function PoshToPageCarts(){
+  router.push('/orders')
+}
 </script>
 <style lang="postcss">
 /* popIn */

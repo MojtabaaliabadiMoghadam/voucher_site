@@ -10,7 +10,7 @@
         <ProductSearch class="hidden sm:inline-flex max-w-[320px] w-[60%]" />
         <div class="flex gap-4 items-center">
           <SignInLink />
-          <CartTrigger />
+<!--          <CartTrigger />-->
           <LangSwitcher  />
           <span class="mr-1 mdi mdi-magnify mdi-24px md:mr-0" @click="toggleSearch"/>
         </div>

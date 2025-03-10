@@ -18,9 +18,9 @@
       <div class="w-3/7 lg:w-auto">
         <div class="mb-1 font-semibold">Products</div>
         <div class="text-sm">
-          <NuxtLink to="/products" class="py-1.5 block">{{ $t('messages.shop.newArrivals') }}</NuxtLink>
-          <NuxtLink to="/products?filter=sale[true]" class="py-1.5 block">On sale</NuxtLink>
-          <NuxtLink to="/products?orderby=rating&order=ASC&filter=rating[1]" class="py-1.5 block">Top rated</NuxtLink>
+          <NuxtLink  class="py-1.5 block">{{ $t('messages.shop.newArrivals') }}</NuxtLink>
+          <NuxtLink  class="py-1.5 block">On sale</NuxtLink>
+          <NuxtLink  class="py-1.5 block">Top rated</NuxtLink>
           <a href="/" class="py-1.5 block">{{ $t('messages.shop.giftCards') }}</a>
         </div>
       </div>
@@ -36,9 +36,9 @@
       <div class="w-3/7 lg:w-auto">
         <div class="mb-1 font-semibold">{{ $t('messages.account.myAccount') }}</div>
         <div class="text-sm">
-          <NuxtLink to="/my-account/" class="py-1.5 block">{{ $t('messages.account.myAccount') }}</NuxtLink>
-          <NuxtLink to="/my-account/?tab=orders" class="py-1.5 block">{{ $t('messages.shop.orderHistory') }}</NuxtLink>
-          <NuxtLink :to="wishlistLink" class="py-1.5 block">{{ $t('messages.shop.wishlist') }}</NuxtLink>
+          <NuxtLink  class="py-1.5 block">{{ $t('messages.account.myAccount') }}</NuxtLink>
+          <NuxtLink  class="py-1.5 block">{{ $t('messages.shop.orderHistory') }}</NuxtLink>
+          <NuxtLink  class="py-1.5 block">{{ $t('messages.shop.wishlist') }}</NuxtLink>
           <a href="/" class="py-1.5 block">{{ $t('messages.general.newsletter') }}</a>
         </div>
       </div>
@@ -50,7 +50,7 @@
           <a href="https://scottyzen.com" title="Scott Kennedy - Web Developer" target="_blank">example name</a>
         </p>
       </div>
-      <SocialIcons class="ml-auto" />
+<!--      <SocialIcons class="ml-auto" />-->
     </div>
   </footer>
 </template>

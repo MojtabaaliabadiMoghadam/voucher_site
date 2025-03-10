@@ -75,7 +75,7 @@
           <AccountMyDetails v-if="activeTab === 'my-details'" />
           <Authentication v-if="activeTab === 'authentication'" />
           <CustomOrderList v-else-if="activeTab === 'orders'"/>
-          <CustomOrderList v-else-if="activeTab === 'bank-transaction'"/>
+<!--          <CustomOrderList v-else-if="activeTab === 'bank-transaction'"/>-->
 <!--          <WishList v-else-if="activeTab === 'wishlist'"/>-->
         </main>
       </div>

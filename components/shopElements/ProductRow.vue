@@ -5,11 +5,7 @@
       :key="node.databaseId"
       class="w-full"
       :node="node"
-      :index="i"
-      :class="{
-        hidden: i === products.length - 1,
-        'lg:block': i === products.length - 1,
-      }" />
+      :index="i"/>
   </div>
 </template>
 <script setup>
