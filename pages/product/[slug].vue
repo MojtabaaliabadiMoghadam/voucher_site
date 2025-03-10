@@ -2,7 +2,7 @@
   <main class="container relative py-6 xl:max-w-7xl">
     <div v-if="product">
 <!--      <SEOHead :info="product" />-->
-      <Breadcrumb :product class="mb-6" v-if="storeSettings.showBreadcrumbOnSingleProduct" />
+<!--      <Breadcrumb :product class="mb-6" v-if="storeSettings.showBreadcrumbOnSingleProduct" />-->
 
       <div class="flex flex-col gap-10 md:flex-row md:justify-between lg:gap-24">
         <img class="relative flex-1 skeleton" :src="product.image || '/images/placeholder.jpg'" :alt="product.name" />
