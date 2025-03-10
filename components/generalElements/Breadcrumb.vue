@@ -25,7 +25,6 @@ const format = computed(() => [
     <span v-for="(link, i) in format" :key="link.name || i">
       <NuxtLink v-if="link.slug" :to="decodeURIComponent(link.slug)" class="hover:text-primary">{{ link.name }}</NuxtLink>
       <span v-else class="text-gray-800">{{ link.name }}</span>
-      <span v-if="i + 1 < format.length"> /</span>
     </span>
   </div>
 </template>
