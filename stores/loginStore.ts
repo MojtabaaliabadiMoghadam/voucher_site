@@ -4,7 +4,7 @@ import { useCookie } from "#app";
 export const useLoginStore = defineStore("login", () => {
     const loginStatus = ref<'login' |  'login-otp' | 'login-password'>('login')
     const loginWith = ref<'mobile' | 'email'>('mobile')
-    const mobile = ref<string>('09158283028')
+    const mobile = ref<string>('')
     const email = ref<string>('')
     const { getUrl, fetchData ,showSuccessToast,showErrorToast} = useHelpers()
     const router = useRouter()

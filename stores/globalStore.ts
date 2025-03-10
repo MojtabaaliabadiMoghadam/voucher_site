@@ -9,6 +9,7 @@ export const useDataGlobal = defineStore("data", () => {
     const router = useRouter();
 
     const products = ref<any[]>([]);
+    const quantity = ref<number>(0);
     const lock = ref(true);
 
     // مقدار فیلترها
@@ -135,7 +136,8 @@ export const useDataGlobal = defineStore("data", () => {
                 url,
                 parameters:{
                     with:['translations','category.translations','prices']
-                }
+                },
+                authorization:true
             })
 
             if (status == 200) {
@@ -147,7 +149,36 @@ export const useDataGlobal = defineStore("data", () => {
             showErrorToast(error)
         }
     }
+    async function CreateOrder(){
+        let pruduct = products.value[0]
+        try {
+            let url = getUrl('/web/order/create')
+            const {status, data, message} = await fetchData({
+                method: 'POST',
+                url,
+                data:{
+                    items:[
+                        {
+                            product_id:pruduct?.id,
+                            quantity:quantity.value
+                        }
+                    ]
+                },
+                authorization:true
+            })
+
+            if (status == 200) {
+                showSuccessToast(message)
+            } else {
+                showErrorToast(message)
+            }
+        } catch (error) {
+            showErrorToast(error)
+        }
+    }
     return {
+        CreateOrder,
+        quantity,
         products,
         GetProducts,
         generateProducts,
